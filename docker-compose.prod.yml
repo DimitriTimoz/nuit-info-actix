@@ -11,22 +11,18 @@ services:
     volumes:
       - dbdata:/var/lib/postgresql/data
   backend:
+    image: lanuitdelinfo-backend
     build: ./backend
     network_mode: "host"
     ports:
       - "8000:8000"
   frontend:
+    image: lanuitdelinfo-frontend
     build: ./frontend
     network_mode: "host"
     volumes:
       - /app/node_modules
     ports:
       - "3000:3000"
-  monservice:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    image: lanuitdelinfo:latest
-
 volumes:
   dbdata:

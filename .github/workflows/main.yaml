@@ -1,5 +1,4 @@
----
-name: Build and Push Golang Image to AWS ECR
+name: Build and Push Images to AWS ECR
 on:
   push:
     branches: [ main ]
@@ -27,25 +26,24 @@ jobs:
       run: |
         bash ./build/git_update.sh -v major
 
-    - name: Build, Tag, and Push the Image to Amazon ECR
-      id: build-image
+    - name: Build Images using Docker Compose
+      run: |
+        docker-compose -f docker-compose.prod.yml build
+
+    - name: Tag and Push Backend Image to Amazon ECR
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-        ECR_REPOSITORY: nuit-info-actix
+        ECR_REPOSITORY: nuit-info-backend
         IMAGE_TAG: ${{ steps.increment-git-tag.outputs.git-tag }}
       run: |
-        # Build the image using docker-compose
-        docker-compose build -f docker-compose.prod.yml
-
-        # Tag the image
-        docker tag lanuitdelinfo:latest $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-
-        # Push the image to ECR
+        docker tag lanuitdelinfo-backend:latest $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-    - name: Tag the image
-      run: |
-        docker tag lanuitdelinfo:latest $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
 
-    - name: Push the image to ECR
+    - name: Tag and Push Frontend Image to Amazon ECR
+      env:
+        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+        ECR_REPOSITORY: nuit-info-frontend
+        IMAGE_TAG: ${{ steps.increment-git-tag.outputs.git-tag }}
       run: |
+        docker tag lanuitdelinfo-frontend:latest $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
