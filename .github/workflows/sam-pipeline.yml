@@ -1,0 +1,27 @@
+on:
+  push:
+    branches:
+      - main
+permissions:
+  id-token: write
+  contents: write
+env:
+  BUCKET_NAME : "nuitdelinfo"
+  AWS_REGION : "eu-west-3"
+  ASSUME_ROLE : "nuitdelinfo"
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+      - uses: aws-actions/setup-sam@v1
+      - uses: aws-actions/configure-aws-credentials@master
+        with:
+          aws-region: ${{ env.AWS_REGION }}
+          role-to-assume: ${{ env.ASSUME_ROLE }}
+      # sam build 
+      - run: sam build --use-container
+# Run Unit tests- Specify unit tests here 
+# sam deploy
+      - run: sam deploy --no-confirm-changeset --no-fail-on-empty-changeset --stack-name sam-hello-world --s3-bucket ${{ env.BUCKET_NAME }} --capabilities CAPABILITY_IAM --region ${{ env.AWS_REGION }}
