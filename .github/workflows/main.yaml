@@ -23,6 +23,7 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           port: 22
           script: |
+            cd nuit-info-actix
             git pull
             docker compose -f docker-compose.prod.yml build
 
