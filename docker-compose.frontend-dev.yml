@@ -10,10 +10,10 @@ services:
       - "5432:5432"
     volumes:
       - dbdata:/var/lib/postgresql/data
-  frontend:
-    build: ./frontend
+  backend:
+    build: ./backend
     ports:
-      - "3000:3000"
+      - "8000:8000"
 
 volumes:
   dbdata:

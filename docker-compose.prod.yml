@@ -12,12 +12,18 @@ services:
       - dbdata:/var/lib/postgresql/data
   backend:
     build: ./backend
+    networks: 
+      - app-network
     ports:
-      - "8080:8080"
+      - "8000:8000"
   frontend:
     build: ./frontend
     ports:
       - "3000:3000"
-
+    networks: 
+      - app-network
 volumes:
   dbdata:
+networks:
+  app-network:
+    driver: bridge
