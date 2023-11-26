@@ -23,5 +23,6 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           port: 22
           script: |
-            docker compose up --build
+            git pull
+            docker compose -f docker-compose.prod.yml build
 
