@@ -35,10 +35,10 @@ jobs:
         IMAGE_TAG: ${{ steps.increment-git-tag.outputs.git-tag }}
       run: |
         # Build the image using docker-compose
-        docker-compose build
+        docker-compose build -f docker-compose.prod.yml
 
         # Tag the image
-        docker tag myapp:latest $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+        docker tag lanuitdelinfo:latest $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
 
         # Push the image to ECR
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
