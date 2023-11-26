@@ -2,6 +2,7 @@ version: '3'
 services:
   db:
     image: postgres
+    network_mode: "host"
     environment:
       POSTGRES_DB: nom_db
       POSTGRES_USER: utilisateur
@@ -12,8 +13,10 @@ services:
       - dbdata:/var/lib/postgresql/data
   frontend:
     build: ./frontend
+    network_mode: "host"
+    volumes:
+      - /app/node_modules
     ports:
       - "3000:3000"
-
 volumes:
   dbdata:
