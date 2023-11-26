@@ -34,5 +34,11 @@ jobs:
         ECR_REPOSITORY: nuit-info-actix
         IMAGE_TAG: ${{ steps.increment-git-tag.outputs.git-tag }}
       run: |
-        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+        # Build the image using docker-compose
+        docker-compose build
+
+        # Tag the image
+        docker tag myapp:latest $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+
+        # Push the image to ECR
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
