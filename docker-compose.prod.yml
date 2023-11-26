@@ -22,5 +22,11 @@ services:
       - /app/node_modules
     ports:
       - "3000:3000"
+  monservice:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: lanuitdelinfo:latest
+
 volumes:
   dbdata:
