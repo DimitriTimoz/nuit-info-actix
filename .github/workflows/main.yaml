@@ -42,3 +42,10 @@ jobs:
 
         # Push the image to ECR
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+    - name: Tag the image
+      run: |
+        docker tag lanuitdelinfo:latest $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+
+    - name: Push the image to ECR
+      run: |
+        docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
