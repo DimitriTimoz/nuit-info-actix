@@ -14,7 +14,7 @@ function App() {
           Edit <code>src/App.js</code> and save to reload.
         </p>
         <p>
-            Alix c'est un connard
+            Alix, c'est un connard et qu'il aille se faire foutre
         </p>
       
       </header>
