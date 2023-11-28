@@ -13,6 +13,9 @@ function App() {
         <p>
           Edit <code>src/App.js</code> and save to reload.
         </p>
+        <p>
+            Alix c'est un connard
+        </p>
       
       </header>
     </div>
