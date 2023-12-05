@@ -1,34 +1,26 @@
-use tokio_postgres::{NoTls, Client, Error};
+use tokio_postgres::{NoTls, Client};
 
 pub struct Database {
     pub client: Client,
 }
 
-impl Database {
-    pub async fn async_new() -> Result<Self, Error> {
-        let (client, connection) =
-            tokio_postgres::connect("host=localhost user=postgres", NoTls).await?;
-
-        tokio::spawn(async move {
-            if let Err(e) = connection.await {
-                eprintln!("connection error: {}", e);
-            }
+impl Default for Database {
+    fn default() -> Self {
+        let client = futures::executor::block_on(async {
+            let (client, connection) = tokio_postgres::connect("host=localhost user=user password=password", NoTls).await.unwrap();
+            tokio::task::spawn(async move {
+                if let Err(e) = connection.await {
+                    eprintln!("connection error: {}", e);
+                }
+            });
+            client
         });
-
-        Ok(Self { client })
-    }
-
-    pub fn new() -> Result<Self, Error> {
-        tokio::runtime::Builder::new_current_thread()
-        .enable_all()
-        .build()
-        .unwrap()
-        .block_on(async {
-            Database::async_new().await
-        })    
+        Database {
+            client,
+        }
     }
 }
 
 lazy_static::lazy_static! {
-    pub static ref DB: Database =  Database::new().unwrap();
+    pub static ref DB: Database =  Database::default();
 }

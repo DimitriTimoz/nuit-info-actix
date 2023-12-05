@@ -4,8 +4,8 @@ services:
     image: postgres
     environment:
       POSTGRES_DB: nom_db
-      POSTGRES_USER: utilisateur
-      POSTGRES_PASSWORD: motdepasse
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
     network_mode: "host"
     ports:
       - "5432:5432"
