@@ -3,7 +3,7 @@ services:
   db:
     image: postgres
     environment:
-      POSTGRES_DB: nom_db
+      POSTGRES_DB: nuitdelinfo
       POSTGRES_USER: user
       POSTGRES_PASSWORD: password
     network_mode: "host"
@@ -11,10 +11,21 @@ services:
       - "5432:5432"
     volumes:
       - dbdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U user"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
   backend:
+    depends_on:
+      db:
+        condition: service_healthy
     network_mode: "host"
     build: ./backend
     ports:
       - "8000:8000"
+    restart: always
+
 volumes:
   dbdata:

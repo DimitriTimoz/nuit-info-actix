@@ -4,13 +4,14 @@ services:
     image: postgres
     network_mode: "host"
     environment:
-      POSTGRES_DB: nom_db
+      POSTGRES_DB: nuitdelinfo
       POSTGRES_USER: user
       POSTGRES_PASSWORD: password
     ports:
       - "5432:5432"
     volumes:
       - dbdata:/var/lib/postgresql/data
+      - ./init-db:/docker-entrypoint-initdb.d
   frontend:
     build: ./frontend
     network_mode: "host"

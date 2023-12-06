@@ -1,6 +1,7 @@
 use ::config::Config;
 use config::ServerConfig;
 use dotenvy::dotenv;
+use pg_migrator::PostgresMigrator;
 
 use crate::prelude::*;
 
@@ -32,6 +33,13 @@ async fn main() -> std::io::Result<()> {
     let config: ServerConfig = config_.try_deserialize().unwrap();
 
     let pool = config.pg.create_pool(None, NoTls).unwrap();
+
+    let mut client = pool.get().await.unwrap();
+   // PostgresMigrator::new("./migrations")
+   //    .migrate(&mut client)
+   //     .await
+   //     .unwrap();
+
     let server = HttpServer::new(move|| {
         App::new()
             .app_data(web::Data::new(pool.clone()))

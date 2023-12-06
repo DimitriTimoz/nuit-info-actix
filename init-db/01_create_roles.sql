@@ -1,0 +1,1 @@
+CREATE ROLE "user" WITH LOGIN PASSWORD 'password';
