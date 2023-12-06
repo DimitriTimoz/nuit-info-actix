@@ -34,7 +34,12 @@ async fn main() -> std::io::Result<()> {
 
     let pool = config.pg.create_pool(None, NoTls).unwrap();
 
-    let mut client = pool.get().await.unwrap();
+    while let Err(e) = pool.get().await {
+        println!("Error connecting to database: {}", e);
+        println!("Retrying in 5 seconds...");
+        std::thread::sleep(std::time::Duration::from_secs(5));
+        
+    } 
    // PostgresMigrator::new("./migrations")
    //    .migrate(&mut client)
    //     .await
