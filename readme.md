@@ -1,5 +1,5 @@
 # TODO:
-Install npx
+Install npm
 
 docker:
 https://docs.docker.com/engine/install
