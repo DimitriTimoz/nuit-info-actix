@@ -16,7 +16,6 @@ import { routes } from './routes';
 export default function AppPage() {
   const routerRef = useRef<RouterProviderProps['router']>();
   const isHydrated = useIsHydrated();
-  
 
   if (!routerRef.current && isHydrated) {
     routerRef.current = createBrowserRouter(routes, {

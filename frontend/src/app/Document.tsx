@@ -3,7 +3,12 @@
 import { ReactNode } from 'react';
 
 import { ColorModeScript } from '@chakra-ui/react';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
+import { Providers } from '@/app/Providers';
+import { Viewport } from '@/components/Viewport';
+import { DemoModalInterceptor } from '@/features/demo-mode/DemoModalInterceptor';
+import { EnvDevHint } from '@/layout/EnvDevHint';
 import i18n from '@/lib/i18n/config';
 import { AVAILABLE_LANGUAGES } from '@/lib/i18n/constants';
 import theme, { COLOR_MODE_STORAGE_KEY } from '@/theme';
@@ -64,6 +69,12 @@ export const Document = ({ children }: { children: ReactNode }) => {
           storageKey={COLOR_MODE_STORAGE_KEY}
         />
 
+        <Providers>
+          <Viewport>{children}</Viewport>
+          <EnvDevHint />
+          <DemoModalInterceptor />
+          <ReactQueryDevtools initialIsOpen={false} />
+        </Providers>
       </body>
     </html>
   );

@@ -3,7 +3,6 @@
   "private": true,
   "version": "1.0.0",
   "description": "Opinionated UI starter with ⚛️ React, ⚡️ Chakra UI, ⚛️ React Query & 🐜 Formiz — From the 🐻 BearStudio Team",
-  "proxy": "http://localhost:8000",
   "engines": {
     "node": ">=16.8.0 <19.0.0",
     "npm": "please-use-yarn",
