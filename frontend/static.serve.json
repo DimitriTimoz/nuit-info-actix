@@ -1,10 +1,6 @@
 {
   "rewrites": [
     {
-      "source": "/api/*",
-      "destination": "http://localhost:8000/"
-    },
-    {
       "source": "/app/:any*",
       "destination": "/app.html"
     }
