@@ -13,9 +13,8 @@ export const MainMenu = ({ ...rest }) => {
   return (
     <Stack direction="row" spacing="1" {...rest}>
       <MainMenuItem to="/">{t('layout:mainMenu.dashboard')}</MainMenuItem>
-      <MainMenuItem to="/repositories">
-        {t('layout:mainMenu.repositories')}
-      </MainMenuItem>
+      <MainMenuItem to="/news">{t('layout:mainMenu.news')}</MainMenuItem>
+      <MainMenuItem to="/social">{t('layout:mainMenu.social')}</MainMenuItem>
     </Stack>
   );
 };

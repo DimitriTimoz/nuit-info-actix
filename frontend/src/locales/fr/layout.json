@@ -2,7 +2,9 @@
   "mainMenu": {
     "dashboard": "Tableau de bord",
     "repositories": "Dépôts",
-    "admin": "Admin"
+    "social": "Réseau Social",
+    "admin": "Admin",
+    "news": "Journaux"
   },
   "accountMenu": {
     "version": {
