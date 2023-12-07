@@ -17,3 +17,4 @@ pg-migrator = { version = "0.2.1", features = ["tokio-postgres"] }
 tokio-postgres = "0.7.6"
 derive_more = "0.99.17"
 dotenvy = "0.15"
+awc = "3.2.0"
