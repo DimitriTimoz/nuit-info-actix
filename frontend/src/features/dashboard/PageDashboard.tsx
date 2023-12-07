@@ -1,30 +1,21 @@
 import React from 'react';
 
-import {
-  Box,
-  Button,
-  Card,
-  CardBody,
-  CardFooter,
-  Grid,
-  Heading,
-  Image,
-  Progress,
-  Text,
-  VStack,
-} from '@chakra-ui/react';
+import { Box, Grid, Heading, Progress, Text, VStack } from '@chakra-ui/react';
+import thumbnail from 'assets/thumbnail.png';
 import { useTranslation } from 'react-i18next';
 
+import { CardMeasure } from '@/components/CardMeasure';
 import { Page, PageContent } from '@/components/Page';
-import { useHelloWorld } from '@/features/dashboard/service';
-
-import thumbnail from '/assets/thumbnail.png';
+import { useGetMeasure } from '@/features/dashboard/service';
+import { Loader } from '@/layout/Loader';
 
 export default function PageDashboard() {
   useTranslation(['dashboard']);
-  const { data } = useHelloWorld();
+  const { data: measure, isLoading } = useGetMeasure();
 
-  console.log(data);
+  if (isLoading) return <Loader />;
+  if (!measure) return <Text>Mesure non trouvé :(</Text>;
+
   return (
     <Page containerSize="full">
       <PageContent
@@ -76,41 +67,7 @@ export default function PageDashboard() {
             justifyContent="center"
             gap="4"
           >
-            <Card
-              width={{ base: '90%', sm: '80%', md: '65%' }}
-              height="fit-content"
-            >
-              <CardBody>
-                <Box
-                  display="flex"
-                  flexDirection="column"
-                  justifyItems="center"
-                >
-                  <Text textAlign="center">
-                    Culpa commodo velit proident do proident cupidatat in sint.
-                    Incididunt nostrud ipsum ut ullamco. Enim in adipisicing
-                    nostrud ea ex fugiat sit labore tempor voluptate amet
-                    proident.
-                  </Text>
-                  <Image
-                    aspectRatio={'1 / 1'}
-                    src={thumbnail.src}
-                    alt="thumbnail"
-                    mx="12"
-                    my="4"
-                    rounded="md"
-                  />
-                </Box>
-              </CardBody>
-              <CardFooter display="flex" justify="center" gap="6">
-                <Button colorScheme="teal" size="sm">
-                  Accepter
-                </Button>
-                <Button colorScheme="teal" size="sm">
-                  Refuser
-                </Button>
-              </CardFooter>
-            </Card>
+            <CardMeasure measure={measure} src={thumbnail.src} />
           </Box>
           <VStack display="flex" flexDirection="column" alignItems="center">
             <Box>
