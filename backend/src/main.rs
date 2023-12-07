@@ -49,6 +49,7 @@ async fn main() -> std::io::Result<()> {
     let server = HttpServer::new(move|| {
         App::new()
             .app_data(web::Data::new(pool.clone()))
+            .wrap(actix_web::middleware::DefaultHeaders::new().add(("Access-Control-Allow-Origin", "*")))
             .service(cors::cors_preflight)
             .service(hello)
             .service(measure::get_measure)
