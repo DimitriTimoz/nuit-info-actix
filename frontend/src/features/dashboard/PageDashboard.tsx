@@ -1,6 +1,14 @@
 import React from 'react';
 
-import { Box, Grid, Heading, Progress, Text, VStack } from '@chakra-ui/react';
+import {
+  Box,
+  Grid,
+  Heading,
+  Progress,
+  Stack,
+  Text,
+  VStack,
+} from '@chakra-ui/react';
 import thumbnail from 'assets/thumbnail.png';
 import { useTranslation } from 'react-i18next';
 
@@ -18,30 +26,9 @@ export default function PageDashboard() {
 
   return (
     <Page containerSize="full">
-      <PageContent
-        mx={{
-          base: '4',
-          sm: '6',
-          md: '8',
-          lg: '10',
-        }}
-      >
-        <Grid
-          templateColumns={{ base: '1fr', md: '1fr 2fr 1fr' }}
-          templateRows={{ base: '1fr 2fr 1fr', md: '1fr' }}
-          gap="4"
-          placeItems="center"
-          justifyContent="center"
-        >
-          <VStack
-            width="full"
-            height="full"
-            display="flex"
-            flexDirection="column"
-            justifyContent="center"
-            alignItems="center"
-            gap="4"
-          >
+      <PageContent>
+        <Stack p="16" direction={{ base: 'column', md: 'row' }}>
+          <VStack justifyContent="center" alignItems="center" flex={1}>
             <VStack width="full" mb="4">
               <Heading size="md">Environnement</Heading>
               <Progress value={50} size="md" width="full" />
@@ -57,19 +44,10 @@ export default function PageDashboard() {
               <Progress value={50} size="md" width="full" />
             </VStack>
           </VStack>
-          <Box
-            display="flex"
-            width="full"
-            height="full"
-            flexDirection="column"
-            justifyItems="center"
-            alignItems="center"
-            justifyContent="center"
-            gap="4"
-          >
+          <Stack flex={1} alignItems="center" justify="center">
             <CardMeasure measure={measure} src={thumbnail.src} />
-          </Box>
-          <VStack display="flex" flexDirection="column" alignItems="center">
+          </Stack>
+          <VStack flex={1} justify="center" alignItems="center">
             <Box>
               <Heading size="md">Affinité faction 1</Heading>
               <Text>50%</Text>
@@ -83,7 +61,7 @@ export default function PageDashboard() {
               <Text>50%</Text>
             </Box>
           </VStack>
-        </Grid>
+        </Stack>
       </PageContent>
     </Page>
   );

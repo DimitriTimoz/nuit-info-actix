@@ -6,6 +6,7 @@ import {
   CardBody,
   CardFooter,
   Image,
+  Stack,
   Text,
 } from '@chakra-ui/react';
 
@@ -19,26 +20,22 @@ export const CardMeasure = ({
   measure: Measure;
 }) => {
   return (
-    <Card
-      width={{ base: '90%', sm: '80%', md: '65%' }}
-      height="fit-content"
-      shadow="2xl"
-    >
+    <Card shadow="2xl">
       <CardBody>
-        <Box display="flex" flexDirection="column" justifyItems="center">
+        <Stack>
           <Text textAlign="center" fontWeight="bold">
             {measure?.title}
           </Text>
           <Text textAlign="center">{measure?.description}</Text>
           <Image
-            aspectRatio={3 / 1}
+            aspectRatio={1}
+            alignSelf="center"
             src={src}
             alt="thumbnail"
-            mx="12"
-            my="4"
+            maxW="80%"
             rounded="md"
           />
-        </Box>
+        </Stack>
       </CardBody>
       <CardFooter display="flex" justify="center" gap="6">
         <ButtonGroup flex={1} justifyContent="space-evenly">
