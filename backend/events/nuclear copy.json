@@ -1,15 +1,10 @@
 {
     "id": "nuclear",
-    "prompt": "",
-    "comment": "TODO",
+    "prompt": "Gigantesque financement de la fusion nucléaire",
     "acceptation_impact": {
         "social": 3,
         "environmental": -2,
         "economic": -3
     },
-    "denial_impact": {
-        "social": -1,
-        "environmental": 0,
-        "economic": 0
-    }
+    "comment": "TODO"
 }
