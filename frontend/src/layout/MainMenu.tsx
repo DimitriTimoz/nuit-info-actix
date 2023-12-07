@@ -4,22 +4,18 @@ import { Box, BoxProps, Stack } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
 import { Link, useLocation } from 'react-router-dom';
 
-import { useAccount } from '@/features/account/service';
 import { useRtl } from '@/hooks/useRtl';
 import { useLayoutContext } from '@/layout/LayoutContext';
 
 export const MainMenu = ({ ...rest }) => {
   const { t } = useTranslation(['layout']);
-  const { isAdmin } = useAccount();
+
   return (
     <Stack direction="row" spacing="1" {...rest}>
       <MainMenuItem to="/">{t('layout:mainMenu.dashboard')}</MainMenuItem>
       <MainMenuItem to="/repositories">
         {t('layout:mainMenu.repositories')}
       </MainMenuItem>
-      {isAdmin && (
-        <MainMenuItem to="/admin">{t('layout:mainMenu.admin')}</MainMenuItem>
-      )}
     </Stack>
   );
 };

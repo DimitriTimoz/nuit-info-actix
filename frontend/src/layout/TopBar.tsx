@@ -13,7 +13,6 @@ import { LuMenu } from 'react-icons/lu';
 import { Link } from 'react-router-dom';
 
 import { Logo } from '@/components/Logo';
-import { AccountMenu } from '@/layout/AccountMenu';
 import { useLayoutContext } from '@/layout/LayoutContext';
 import { MainMenu } from '@/layout/MainMenu';
 import { NavDrawer } from '@/layout/NavDrawer';
@@ -73,7 +72,6 @@ export const TopBar = () => {
             <Logo />
           </Box>
           <MainMenu me="auto" ms="4" display={{ base: 'none', md: 'flex' }} />
-          <AccountMenu />
         </Flex>
       </SlideFade>
       <Box h={theme.layout.topBar.height} />
