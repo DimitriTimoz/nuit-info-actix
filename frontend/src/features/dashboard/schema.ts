@@ -6,4 +6,5 @@ export const zMeasure = () =>
     id: z.number(),
     title: z.string(),
     description: z.string(),
+    action_type: z.string(),
   });
