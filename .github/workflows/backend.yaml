@@ -23,9 +23,7 @@ jobs:
           ~/.cargo/git/db/
           backend/target/
         key: ${{ runner.os }}-cargo-${{ hashFiles('**/backend.yml') }}
-    - name: Go in subdirectory
-      run: cd backend
     - name: Build
-      run: cargo build
+      run: cargo build --manifest-path=backend/Cargo.toml
     - name: Run tests
-      run: cargo test
+      run: cargo test --manifest-path=backend/Cargo.toml
