@@ -45,13 +45,13 @@ export default function PageDashboard() {
         }}
       >
         <Grid
-          templateColumns={{ base: '1fr', md: '1fr 4fr 1fr' }}
-          templateRows={{ base: '1fr 1fr 1fr', md: '1fr' }}
+          templateColumns={{ base: '1fr', md: '1fr 2fr 1fr' }}
+          templateRows={{ base: '1fr 2fr 1fr', md: '1fr' }}
           gap="4"
           placeItems="center"
           justifyContent="center"
         >
-          <Box
+          <VStack
             width="full"
             height="full"
             display="flex"
@@ -60,10 +60,21 @@ export default function PageDashboard() {
             alignItems="center"
             gap="4"
           >
-            <Progress value={50} size="md" width="full" />
-            <Progress value={50} size="md" width="full" />
-            <Progress value={50} size="md" width="full" />
-          </Box>
+            <VStack width="full" mb="4">
+              <Heading size="md">Environnement</Heading>
+              <Progress value={50} size="md" width="full" />
+            </VStack>
+
+            <VStack width="full" mb="4">
+              <Heading size="md">Social</Heading>
+              <Progress value={50} size="md" width="full" />
+            </VStack>
+
+            <VStack width="full" mb="4">
+              <Heading size="md">Economie</Heading>
+              <Progress value={50} size="md" width="full" />
+            </VStack>
+          </VStack>
           <Box
             display="flex"
             width="full"
@@ -75,7 +86,7 @@ export default function PageDashboard() {
             gap="4"
           >
             <Card
-              width={{ base: '90%', sm: '80%', md: '65%', lg: '50%' }}
+              width={{ base: '90%', sm: '80%', md: '65%' }}
               height="fit-content"
             >
               <CardBody>
@@ -93,7 +104,8 @@ export default function PageDashboard() {
                   <Image
                     aspectRatio={1 / 1}
                     src="https://via.placeholder.com/150"
-                    m="4"
+                    mx="12"
+                    my="4"
                     rounded="md"
                   />
                 </Box>
