@@ -2,23 +2,45 @@
 
 # dependencies
 /node_modules
-node_modules
 /.pnp
 .pnp.js
 
 # testing
 /coverage
 
+# next.js
+/.next/
+/out/
+
 # production
 /build
+/public/storybook
+/storybook-static
 
 # misc
 .DS_Store
+*.pem
+/.vscode/*
+!/.vscode/extensions.json
+.idea/
+.eslintcache
+.db
+.git
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# local env files
 .env.local
 .env.development.local
 .env.test.local
 .env.production.local
 
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
+# vercel
+.vercel
+
+Dockerfile
+.dockerignore
+README.md
