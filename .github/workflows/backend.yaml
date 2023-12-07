@@ -21,8 +21,10 @@ jobs:
           ~/.cargo/registry/index/
           ~/.cargo/registry/cache/
           ~/.cargo/git/db/
-          target/
-        key: ${{ runner.os }}-cargo-${{ hashFiles('**/rust.yml') }}
+          backend/target/
+        key: ${{ runner.os }}-cargo-${{ hashFiles('**/backend.yml') }}
+    - name: Go in subdirectory
+      run: cd backend
     - name: Build
       run: cargo build
     - name: Run tests
