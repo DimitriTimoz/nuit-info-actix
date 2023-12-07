@@ -10,6 +10,7 @@ pub mod prelude;
 pub mod config;
 pub mod errors;
 pub mod models;
+pub mod measure;
 
 #[get("/")]
 async fn hello() -> impl Responder {
@@ -48,6 +49,7 @@ async fn main() -> std::io::Result<()> {
         App::new()
             .app_data(web::Data::new(pool.clone()))
             .service(hello)
+            .service(measure::get_measure)
             .route("/hey", web::get().to(manual_hello))
     })
     .bind(("0.0.0.0", 8000))?
