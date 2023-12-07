@@ -1,0 +1,20 @@
+{
+  "mainMenu": {
+    "dashboard": "Dashboard",
+    "repositories": "Repositories",
+    "admin": "Admin",
+    "social": "Social",
+    "news": "News"
+  },
+  "accountMenu": {
+    "version": {
+      "copied": "Version copied",
+      "copy": "Copy version",
+      "label": "Version"
+    },
+    "switchColorModeDark": "Switch to Dark Mode",
+    "switchColorModeLight": "Switch to Light Mode",
+    "myAccount": "My Account",
+    "logout": "Logout"
+  }
+}

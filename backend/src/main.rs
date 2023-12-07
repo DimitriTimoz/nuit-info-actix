@@ -10,6 +10,7 @@ pub mod prelude;
 pub mod config;
 pub mod errors;
 pub mod models;
+pub mod cors;
 pub mod measure;
 
 #[get("/")]
@@ -48,6 +49,7 @@ async fn main() -> std::io::Result<()> {
     let server = HttpServer::new(move|| {
         App::new()
             .app_data(web::Data::new(pool.clone()))
+            .service(cors::cors_preflight)
             .service(hello)
             .service(measure::get_measure)
             .route("/hey", web::get().to(manual_hello))

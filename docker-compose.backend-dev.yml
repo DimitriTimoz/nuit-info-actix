@@ -1,4 +1,4 @@
-version: '3'
+version: "3"
 services:
   db:
     image: postgres
@@ -14,7 +14,9 @@ services:
       - ./init-db:/docker-entrypoint-initdb.d
   frontend:
     build: ./frontend
-    network_mode: "host"
+    environment:
+      - NEXT_PUBLIC_BASE_URL=http://localhost:3000
+      - NEXT_PUBLIC_API_BASE_URL=http://localhost:8000
     volumes:
       - /app/node_modules
     ports:
