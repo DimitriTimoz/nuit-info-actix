@@ -1,7 +1,9 @@
 {
   "mainMenu": {
     "dashboard": "اللوحة الرئيسية",
-    "admin": "المسؤول"
+    "admin": "المسؤول",
+    "social": "التواصل الاجتماعي",
+    "news": "الأخبار"
   },
   "accountMenu": {
     "version": {

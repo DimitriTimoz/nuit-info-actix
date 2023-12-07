@@ -1,7 +1,9 @@
 {
   "mainMenu": {
     "dashboard": "Dashibodi",
-    "admin": "Admin"
+    "admin": "Admin",
+    "social": "Jamii",
+    "news": "Habari"
   },
   "accountMenu": {
     "version": {
