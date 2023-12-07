@@ -1,37 +1,28 @@
 import React from 'react';
 
 import {
-  Alert,
-  AlertDescription,
-  AlertIcon,
-  AlertTitle,
   Box,
   Button,
   Card,
   CardBody,
   CardFooter,
-  CardHeader,
-  Center,
   Grid,
-  HStack,
   Heading,
   Image,
-  Img,
   Progress,
-  StackDivider,
   Text,
   VStack,
-  Wrap,
 } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
 
 import { Page, PageContent } from '@/components/Page';
 import { useHelloWorld } from '@/features/dashboard/service';
-import { Loader } from '@/layout/Loader';
+
+import thumbnail from '/assets/thumbnail.png';
 
 export default function PageDashboard() {
-  const { t } = useTranslation(['dashboard']);
-  const { data, isLoading, refetch } = useHelloWorld();
+  useTranslation(['dashboard']);
+  const { data } = useHelloWorld();
 
   console.log(data);
   return (
@@ -102,8 +93,9 @@ export default function PageDashboard() {
                     proident.
                   </Text>
                   <Image
-                    aspectRatio={1 / 1}
-                    src="https://via.placeholder.com/150"
+                    aspectRatio={'1 / 1'}
+                    src={thumbnail.src}
+                    alt="thumbnail"
                     mx="12"
                     my="4"
                     rounded="md"
