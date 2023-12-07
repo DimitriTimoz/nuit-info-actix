@@ -21,7 +21,7 @@ import { useHelloWorld } from '@/features/dashboard/service';
 import thumbnail from '/assets/thumbnail.png';
 
 export default function PageDashboard() {
-  useTranslation(['dashboard']);
+  const { t } = useTranslation(['layout']);
   const { data } = useHelloWorld();
 
   console.log(data);
@@ -52,17 +52,17 @@ export default function PageDashboard() {
             gap="4"
           >
             <VStack width="full" mb="4">
-              <Heading size="md">Environnement</Heading>
+              <Heading size="md">{t('layout:dashboard.environement')}</Heading>
               <Progress value={50} size="md" width="full" />
             </VStack>
 
             <VStack width="full" mb="4">
-              <Heading size="md">Social</Heading>
+              <Heading size="md">{t('layout:dashboard.social')}</Heading>
               <Progress value={50} size="md" width="full" />
             </VStack>
 
             <VStack width="full" mb="4">
-              <Heading size="md">Economie</Heading>
+              <Heading size="md">{t('layout:dashboard.economy')}</Heading>
               <Progress value={50} size="md" width="full" />
             </VStack>
           </VStack>
@@ -104,25 +104,26 @@ export default function PageDashboard() {
               </CardBody>
               <CardFooter display="flex" justify="center" gap="6">
                 <Button colorScheme="teal" size="sm">
-                  Accepter
+                  {t('layout:dashboard.accept')}
                 </Button>
                 <Button colorScheme="teal" size="sm">
-                  Refuser
+                  {t('layout:dashboard.reject')}
                 </Button>
               </CardFooter>
             </Card>
           </Box>
-          <VStack display="flex" flexDirection="column" alignItems="center">
+          <VStack display="flex" flexDirection="column" alignItems="flex-start">
+            <Heading size="lg">{t('layout:dashboard.affinity')}</Heading>
             <Box>
-              <Heading size="md">Affinité faction 1</Heading>
+              <Heading size="md">{t('layout:dashboard.scientists')}</Heading>
               <Text>50%</Text>
             </Box>
             <Box>
-              <Heading size="md">Affinité faction 2</Heading>
+              <Heading size="md">{t('layout:dashboard.united_nation')}</Heading>
               <Text>50%</Text>
             </Box>
             <Box>
-              <Heading size="md">Affinité faction 3</Heading>
+              <Heading size="md">{t('layout:dashboard.cartel')}</Heading>
               <Text>50%</Text>
             </Box>
           </VStack>
