@@ -1,0 +1,29 @@
+name: Rust
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ '**' ]
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  Tests:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - uses: actions/cache@v3
+      with:
+        path: |
+          ~/.cargo/bin/
+          ~/.cargo/registry/index/
+          ~/.cargo/registry/cache/
+          ~/.cargo/git/db/
+          backend/target/
+        key: ${{ runner.os }}-cargo-${{ hashFiles('**/backend.yml') }}
+    - name: Build
+      run: cargo build --manifest-path=backend/Cargo.toml
+    - name: Run tests
+      run: cargo test --manifest-path=backend/Cargo.toml
