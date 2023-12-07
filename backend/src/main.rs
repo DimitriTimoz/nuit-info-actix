@@ -2,6 +2,7 @@ use ::config::Config;
 use config::ServerConfig;
 use dotenvy::dotenv;
 use pg_migrator::PostgresMigrator;
+use reqwest::ClientBuilder;
 
 use crate::prelude::*;
 
@@ -10,6 +11,7 @@ pub mod prelude;
 pub mod config;
 pub mod errors;
 pub mod models;
+pub mod veep;
 
 #[get("/")]
 async fn hello() -> impl Responder {
@@ -24,6 +26,12 @@ async fn manual_hello() -> impl Responder {
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
     dotenv().ok();
+
+
+    // move it:
+    let mut client = ClientBuilder::new().cookie_store(true).build().unwrap();
+    veep::login(&mut client).await;
+    veep::send_file(&mut client, "test").await;
 
     let config_ = Config::builder()
         .add_source(::config::Environment::default())
