@@ -9,7 +9,6 @@
     "yarn": ">=1.22"
   },
   "scripts": {
-    "prepare": "husky install",
     "postinstall": "prisma generate && yarn build:info && yarn theme:generate-typing",
     "test": "cypress open",
     "test:ci": "SKIP_ENV_VALIDATIONS=true cypress run --component",
