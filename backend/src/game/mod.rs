@@ -5,6 +5,10 @@ use crate::{prelude::*, measure::replace_measure};
 use std::collections::HashMap;
 use tokio::sync::RwLock;
 
+mod authorization;
+pub use authorization::Authorization;
+
+
 
 lazy_static::lazy_static! {
     pub static ref GAMES : RwLock<HashMap<Uuid, Game>> = RwLock::new(HashMap::new());
@@ -84,26 +88,14 @@ pub async fn create_game(request: HttpRequest, body : web::Json<Pseudo>) -> impl
 
 #[get("/game")]
 pub async fn get_game(request: HttpRequest) -> impl Responder {
-    let header_value = request.headers().get("Authorization");
-
-    let token_value = match header_value {
-        Some(token) => token.to_str(),
-        None => return HttpResponse::BadRequest().body("No token provided"),
-    };
-
-    let token_string = match token_value {
-        Ok(token) => token,
-        Err(_) => return HttpResponse::BadRequest().body("Token is not a string"),
-    };
-
-    let uuid = match Uuid::parse_str(token_string) {
-        Ok(uuid) => uuid,
-        Err(_) => return HttpResponse::BadRequest().body("Invalid token"),
+    let authorization = match Authorization::try_from(request.headers()) {
+        Ok(authorization) => authorization,
+        Err(e) => return HttpResponse::BadRequest().body(e),
     };
 
     let games = GAMES.read().await;
 
-    let game = match games.get(&uuid) {
+    let game = match games.get(&authorization.into()) {
         Some(game) => Some(game),
         None => return HttpResponse::BadRequest().body("No game found"),
     };
@@ -125,26 +117,14 @@ pub async fn get_game(request: HttpRequest) -> impl Responder {
 }
 
 pub async fn answer(request: &HttpRequest, factor: isize) -> impl Responder {
-    let header_value = request.headers().get("Authorization");
-
-    let token_value = match header_value {
-        Some(token) => token.to_str(),
-        None => return HttpResponse::BadRequest().body("No token provided"),
-    };
-
-    let token_string = match token_value {
-        Ok(token) => token,
-        Err(_) => return HttpResponse::BadRequest().body("Token is not a string"),
-    };
-
-    let uuid = match Uuid::parse_str(token_string) {
-        Ok(uuid) => uuid,
-        Err(_) => return HttpResponse::BadRequest().body("Invalid token"),
+    let authorization = match Authorization::try_from(request.headers()) {
+        Ok(authorization) => authorization,
+        Err(e) => return HttpResponse::BadRequest().body(e),
     };
 
     let mut games = GAMES.write().await;
 
-    let game = match games.get_mut(&uuid) {
+    let game = match games.get_mut(&authorization.into()) {
         Some(game) => game,
         None => return HttpResponse::BadRequest().body("No game found"),
     };
@@ -175,25 +155,14 @@ pub async fn reject(request: HttpRequest) -> impl Responder {
 
 #[post("/forty_nine_three")]
 pub async fn forty_nine_three(request: HttpRequest) -> impl Responder {
-    let header_value = request.headers().get("Authorization");
-    let token_value = match header_value {
-        Some(token) => token.to_str(),
-        None => return HttpResponse::BadRequest().body("No token provided"),
-    };
-
-    let token_string = match token_value {
-        Ok(token) => token,
-        Err(_) => return HttpResponse::BadRequest().body("Token is not a string"),
-    };
-
-    let uuid = match Uuid::parse_str(token_string) {
-        Ok(uuid) => uuid,
-        Err(_) => return HttpResponse::BadRequest().body("Invalid token"),
+    let authorization = match Authorization::try_from(request.headers()) {
+        Ok(authorization) => authorization,
+        Err(e) => return HttpResponse::BadRequest().body(e),
     };
 
     let mut games = GAMES.write().await;
 
-    let game = match games.get_mut(&uuid) {
+    let game = match games.get_mut(&authorization.into()) {
         Some(game) => game,
         None => return HttpResponse::BadRequest().body("No game found"),
     };
