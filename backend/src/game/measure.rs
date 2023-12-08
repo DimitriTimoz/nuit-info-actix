@@ -1,8 +1,11 @@
 use std::collections::HashMap;
 
 use serde::{Deserialize, Serialize};
-use crate::{prelude::*, game::Game};
-use rand::Rng;
+use crate::prelude::*;
+
+use super::*;
+
+
 
 const MEASURE_DIRECTORY : &str = "./events";
 
@@ -11,14 +14,14 @@ enum ActionType {
     AcceptOrReject
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct FactionImpact {
     pub scientist: isize,
     pub united_nations: isize,
     pub cartel: isize
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct MeasureImpact {
     pub social: isize,
     pub environmental: isize,
@@ -26,20 +29,23 @@ pub struct MeasureImpact {
     pub factions: FactionImpact
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct RawMeasure {
     source: String,
-    prompt: String,
+    title: String,
+    description: String,
     pub acceptation_impact: MeasureImpact,
     comment: Option<String>,
+    #[serde(default)]
+    links: Vec<String>,
 }
 
-impl From<(String, RawMeasure)> for Measure {
-    fn from((id, measure): (String, RawMeasure)) -> Self {
+
+impl From<RawMeasure> for Measure {
+    fn from(raw_measure : RawMeasure) -> Self {
         Measure {
-            id,
-            title: measure.source,
-            description: measure.comment.unwrap_or_default(),
+            title: raw_measure.title,
+            description: raw_measure.description,
             action_type: ActionType::AcceptOrReject,
         }
     }
@@ -72,16 +78,17 @@ lazy_static::lazy_static! {
 
 #[derive(Serialize, Deserialize, Debug)]
 struct Measure {
-    id: String,
     title: String,
     description: String,
     action_type: ActionType
 }
 
+
 #[derive(Debug)]
-enum Error {
+pub enum Error {
     ListMeasuresFiles,
     ReadMeasureFile,
+    NoMoreMeasures,
 }
 
 fn list_measures_files() -> Result<Vec<String>, Error> {
@@ -102,46 +109,43 @@ fn list_measures_files() -> Result<Vec<String>, Error> {
     Ok(files)
 }
 
-pub fn replace_measure(game: &mut Game) {
+pub fn get_random_measure(game : &Game) -> Result<String, Error> {
     let mut possible = MEASURES.keys().collect::<Vec<_>>();
-    possible.retain(|key| !game.already_seen_measures.contains(*key));
-    let Some(measure) = rand::seq::SliceRandom::choose(possible.as_slice(), &mut rand::thread_rng()) else {return};
-    game.current_measure = (*measure).to_owned();
+    possible.retain(|key| !game.contains_measure(*key));
+    let Some(measure) = rand::seq::SliceRandom::choose(possible.as_slice(), &mut rand::thread_rng()) else { return Err(Error::NoMoreMeasures) };
+    Ok(measure.to_string())
 }
+
 
 #[get("/measure")]
 async fn get_measure(request: HttpRequest) -> impl Responder {
-    let header_value = request.headers().get("token");
-
-    let token_value = match header_value {
-        Some(token) => token.to_str(),
-        None => return HttpResponse::BadRequest().body("No token provided"),
+    let authorization = match Authorization::try_from(request.headers()) {
+        Ok(authorization) => authorization,
+        Err(e) => return HttpResponse::BadRequest().body(e),
     };
 
-    let token_string = match token_value {
-        Ok(token) => token,
-        Err(_) => return HttpResponse::BadRequest().body("Token is not a string"),
-    };
+    let mut games = GAMES.write().await;
 
-    let uuid = match uuid::Uuid::parse_str(token_string) {
-        Ok(uuid) => uuid,
-        Err(_) => return HttpResponse::BadRequest().body("Invalid token"),
-    };
-
-    let games = crate::game::GAMES.read().await;
-
-    let game = match games.get(&uuid) {
+    let game = match games.get_mut(&authorization.into()) {
         Some(game) => game,
         None => return HttpResponse::BadRequest().body("No game found"),
     };
 
-    let measure = match MEASURES.get(&game.current_measure) {
+    let measure_raw = match MEASURES.get(&game.current_measure) {
         Some(measure) => measure,
         None => return HttpResponse::InternalServerError().body("Measure not found"),
     };
 
+    let measure = Measure::from(measure_raw.clone());
+
+    if let Some(penalty) = get_penalty(game) {
+        game.set_notification(format_penalty(penalty));
+    }
+
     HttpResponse::Ok().json(measure)
 }
+
+
 
 #[cfg(test)]
 mod tests {

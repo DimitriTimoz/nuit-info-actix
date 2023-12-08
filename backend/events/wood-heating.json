@@ -1,17 +1,18 @@
 {
     "source": "councellor",
-    "prompt": "Monsieur le Président, il faut interdir le chauffage au bois.",
+    "title": "Interdiction du chauffage au bois",
+    "description": "Certains activistes écologistes demandent l'interdiction du chauffage au bois.",
     "acceptation_impact": {
-        "social": -1,
-        "environmental": 1,
+        "social": -5,
+        "environmental": 5,
         "economic": 0,
         "factions": {
-            "scientist": 1,
+            "scientist": 5,
             "united_nations": 0,
             "cartel": 0
         }
     },
-    "comment": "Le chauffage au bois produit des particules fines très nocives pour le corps humain. Selon les autorités américaines, le chauffage au bois domestique est responsable de 25% des riques de cancer.",
+    "comment": "Le chauffage au bois produit des particules fines très nocives pour le corps humain. Selon les autorités américaines, le chauffage au bois domestique est responsable de 25% des riques de cancer. Cepandant, l'utilisation de bois comme source d'énergie ne résulte pas en émission supplémentaire de CO2, car laisser le bois se décomposer dans la nature émettrait la même quantité de CO2.",
     "links" : [
         "https://www.tandfonline.com/doi/full/10.1080/10962247.2022.2050442"
     ]

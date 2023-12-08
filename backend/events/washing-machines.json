@@ -1,16 +1,19 @@
 {
     "source": "councellor",
-    "prompt": "Monsieur le Président, l'industrie des machines à laver propose que nous subventionnions les machines à grande capacité.",
+    "title": "Aide à l'achat de machines à laver à grande capacité",
+    "description": "L'industrie des machines à laver prétend que l'utilisation de machines à laver à grande capacité est plus écologique. Encourager à l'achat de machines à laver à grande capacité pourrait aider à réduire la consommation d'énergie et d'eau.",
     "acceptation_impact": {
-        "social": 1,
-        "environmental": -2,
-        "economic": -2,
+        "social": 5,
+        "environmental": -10,
+        "economic": -10,
         "factions": {
-            "scientist": -1,
+            "scientist": -5,
             "united_nations": 0,
             "cartel": 0
         }
     },
     "comment": "Les machines à laver à grande capacité sont souvent utilisées en dessous de leur capacité maximale. Cela signifie que nous consommons plus d'énergie et d'eau sans raison.",
-    "links": null
+    "links": [
+        "https://www.quechoisir.org/conseils-lave-linge-et-environnement-les-bons-gestes-n68231/"
+    ]
 }

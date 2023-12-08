@@ -14,5 +14,12 @@
     "cartel": "Cartel",
     "accept": "Accept",
     "reject": "Reject"
+  },
+  "createGame": {
+    "createGame": "Create a game",
+    "newGame": "New game",
+    "username": "Username",
+    "enterUsername": "Enter a username",
+    "requiredUsername": "Username is required"
   }
 }

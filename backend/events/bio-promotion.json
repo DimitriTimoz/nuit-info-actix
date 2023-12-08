@@ -1,15 +1,19 @@
 {
     "source": "councellor",
-    "prompt": "Monsieur le Président, nous pouvons commencer la diffusion d'une campagne de promotion pour les produits issus d'agriculture biologique.",
+    "title": "Promotion du Bio",
+    "description": "Monsieur le Président, nous pouvons commencer la diffusion d'une campagne de promotion pour les produits issus d'agriculture biologique.",
     "acceptation_impact": {
-        "social": 1,
-        "environmental": 1,
-        "economic": -1,
+        "social": 5,
+        "environmental": 5,
+        "economic": -5,
         "factions": {
             "scientist": 0,
             "united_nations": 0,
-            "cartel": -1
+            "cartel": -5
         }
     },
-    "comment": null
+    "comment": "La production biologique permet une production plus saine et sensibiliser les gens à ce sujet ne peut être qu'une bonne chose.",
+    "links": [
+
+    ]
 }

@@ -14,5 +14,12 @@
     "cartel": "Cartel",
     "accept": "Accepter",
     "reject": "Refuser"
+  },
+  "createGame": {
+    "createGame": "Création d'une partie",
+    "newGame": "Nouvelle partie",
+    "username": "Pseudo",
+    "enterUsername": "Entrer un pseudo",
+    "requiredUsername": "Le pseudo est requis"
   }
 }

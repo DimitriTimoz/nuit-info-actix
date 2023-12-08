@@ -1,10 +1,17 @@
-use serde_json::json;
+use crate::prelude::*;
+use config::Value;
 use serde::Deserialize;
-use uuid::Uuid;
-use crate::{prelude::*, measure::replace_measure};
-use std::collections::HashMap;
+use serde_json::json;
+use std::{collections::HashMap, ptr::null};
 use tokio::sync::RwLock;
+use uuid::Uuid;
 
+mod authorization;
+pub use authorization::*;
+mod measure;
+pub use measure::*;
+mod penalty;
+pub use penalty::*;
 
 lazy_static::lazy_static! {
     pub static ref GAMES : RwLock<HashMap<Uuid, Game>> = RwLock::new(HashMap::new());
@@ -21,12 +28,13 @@ pub struct Game {
     forty_nine_three: bool,
     current_year: usize,
     current_month: u8,
+    notification: Option<String>,
     pub current_measure: String,
     pub already_seen_measures: Vec<String>,
 }
 
 impl Game {
-    fn new(pseudo : String) -> Self {
+    fn new(pseudo: String) -> Self {
         let mut game = Game {
             pseudo,
             social: 50,
@@ -38,10 +46,18 @@ impl Game {
             forty_nine_three: true,
             current_year: 2023,
             current_month: 1,
+            notification: None,
             current_measure: String::new(),
             already_seen_measures: Vec::new(),
         };
-        crate::measure::replace_measure(&mut game);
+        
+        let random_measure = match get_random_measure(&game) {
+            Ok(measure) => measure,
+            Err(_) => panic!("Measure not found"),
+        };
+
+        game.set_current_measure(random_measure);
+
         game
     }
 
@@ -52,10 +68,9 @@ impl Game {
             self.current_year += 1;
             self.forty_nine_three = true;
         }
-
     }
 
-    pub fn apply_measure(&mut self, measure: &crate::measure::RawMeasure, factor: isize) {
+    pub fn apply_measure(&mut self, measure: &RawMeasure, factor: isize) {
         self.social += measure.acceptation_impact.social * factor;
         self.economic += measure.acceptation_impact.economic * factor;
         self.environmental += measure.acceptation_impact.environmental * factor;
@@ -64,7 +79,49 @@ impl Game {
         self.cartel += measure.acceptation_impact.factions.cartel * factor;
     }
 
+    pub fn set_current_measure(&mut self, measure: String) {
+        self.current_measure = (*measure).to_owned();
+    }
 
+    pub fn contains_measure(&self, measure: &str) -> bool {
+        self.already_seen_measures.contains(&measure.to_owned())
+    }
+
+    pub fn is_game_over(&self) -> bool {
+        self.social <= 5 || self.economic <= 5 || self.environmental <= 5
+    }
+
+    pub fn clear_some_measures(&mut self) {
+        for _ in 0..5 {
+            self.already_seen_measures.remove(0);
+        }
+    }
+
+    pub fn get_scientist_penalty_probability(&self) -> isize {
+        100 - self.scientist
+    }
+
+    pub fn get_united_nations_penalty_probability(&self) -> isize {
+        100 - self.united_nations
+    }
+
+    pub fn get_cartel_penalty_probability(&self) -> isize {
+        100 - self.cartel
+    }
+
+    pub fn set_notification(&mut self, notification: String) {
+        self.notification = Some(notification);
+    }
+
+    pub fn pop_notification(&mut self) -> Option<String> {
+        if self.notification.is_none() {
+            return None;
+        }
+
+        let notification = self.notification.clone();
+        self.notification = None;
+        Some(notification.unwrap())
+    }
 }
 
 #[derive(Deserialize)]
@@ -73,7 +130,7 @@ struct Pseudo {
 }
 
 #[post("/create_game")]
-pub async fn create_game(request: HttpRequest, body : web::Json<Pseudo>) -> impl Responder {
+pub async fn create_game(_: HttpRequest, body: web::Json<Pseudo>) -> impl Responder {
     let game = Game::new(body.pseudo.clone());
     let id = Uuid::new_v4();
 
@@ -84,72 +141,59 @@ pub async fn create_game(request: HttpRequest, body : web::Json<Pseudo>) -> impl
 
 #[get("/game")]
 pub async fn get_game(request: HttpRequest) -> impl Responder {
-    let header_value = request.headers().get("token");
-
-    let token_value = match header_value {
-        Some(token) => token.to_str(),
-        None => return HttpResponse::BadRequest().body("No token provided"),
+    let authorization = match Authorization::try_from(request.headers()) {
+        Ok(authorization) => authorization,
+        Err(e) => return HttpResponse::BadRequest().body(e),
     };
 
-    let token_string = match token_value {
-        Ok(token) => token,
-        Err(_) => return HttpResponse::BadRequest().body("Token is not a string"),
-    };
+    let mut games = GAMES.write().await;
 
-    let uuid = match Uuid::parse_str(token_string) {
-        Ok(uuid) => uuid,
-        Err(_) => return HttpResponse::BadRequest().body("Invalid token"),
-    };
-
-    let games = GAMES.read().await;
-
-    let game = match games.get(&uuid) {
+    let game = match games.get_mut(&authorization.clone().into()) {
         Some(game) => Some(game),
+        None => return HttpResponse::BadRequest().body("No game found"),
+    };
+
+    let game = match game {
+        Some(game) => game,
         None => return HttpResponse::BadRequest().body("No game found"),
     };
 
     let game_informations = json!(
         {
-            "social": game.unwrap().social,
-            "economic": game.unwrap().economic,
-            "environmental": game.unwrap().environmental,
-            "scientist": game.unwrap().scientist,
-            "united_nations": game.unwrap().united_nations,
-            "cartel": game.unwrap().cartel,
-            "current_year": game.unwrap().current_year,
-            "current_month": game.unwrap().current_month,
+            "social": game.social,
+            "economic": game.economic,
+            "environmental": game.environmental,
+            "scientist": game.scientist,
+            "united_nations": game.united_nations,
+            "cartel": game.cartel,
+            "current_year": game.current_year,
+            "current_month": game.current_month,
+            "game_over": game.is_game_over(),
+            "notification": game.pop_notification(),
         }
     );
+
+    if game.is_game_over() {
+        games.remove_entry(&authorization.into());
+    }
 
     HttpResponse::Ok().body(game_informations.to_string())
 }
 
 pub async fn answer(request: &HttpRequest, factor: isize) -> impl Responder {
-    let header_value = request.headers().get("token");
-
-    let token_value = match header_value {
-        Some(token) => token.to_str(),
-        None => return HttpResponse::BadRequest().body("No token provided"),
-    };
-
-    let token_string = match token_value {
-        Ok(token) => token,
-        Err(_) => return HttpResponse::BadRequest().body("Token is not a string"),
-    };
-
-    let uuid = match Uuid::parse_str(token_string) {
-        Ok(uuid) => uuid,
-        Err(_) => return HttpResponse::BadRequest().body("Invalid token"),
+    let authorization = match Authorization::try_from(request.headers()) {
+        Ok(authorization) => authorization,
+        Err(e) => return HttpResponse::BadRequest().body(e),
     };
 
     let mut games = GAMES.write().await;
 
-    let game = match games.get_mut(&uuid) {
+    let game = match games.get_mut(&authorization.into()) {
         Some(game) => game,
         None => return HttpResponse::BadRequest().body("No game found"),
     };
 
-    let measure = match crate::measure::MEASURES.get(&game.current_measure) {
+    let measure = match MEASURES.get(&game.current_measure) {
         Some(measure) => measure,
         None => return HttpResponse::InternalServerError().body("Measure not found"),
     };
@@ -157,8 +201,24 @@ pub async fn answer(request: &HttpRequest, factor: isize) -> impl Responder {
     game.apply_measure(measure, factor);
     game.next_month();
 
-    game.already_seen_measures.push(game.current_measure.clone());
-    replace_measure(game);
+    game.already_seen_measures
+        .push(game.current_measure.clone());
+
+
+    let random_measure = get_random_measure(game);
+
+    if random_measure.is_err() {
+        game.clear_some_measures();
+    }
+
+    let random_measure = match get_random_measure(game) {
+        Ok(measure) => measure,
+        Err(_) => return HttpResponse::InternalServerError().body("Random measure not found"),
+    };
+
+    game.set_current_measure(random_measure);
+
+
 
     HttpResponse::Ok().body("OK")
 }
@@ -175,26 +235,14 @@ pub async fn reject(request: HttpRequest) -> impl Responder {
 
 #[post("/forty_nine_three")]
 pub async fn forty_nine_three(request: HttpRequest) -> impl Responder {
-    let header_value = request.headers().get("token");
-
-    let token_value = match header_value {
-        Some(token) => token.to_str(),
-        None => return HttpResponse::BadRequest().body("No token provided"),
-    };
-
-    let token_string = match token_value {
-        Ok(token) => token,
-        Err(_) => return HttpResponse::BadRequest().body("Token is not a string"),
-    };
-
-    let uuid = match Uuid::parse_str(token_string) {
-        Ok(uuid) => uuid,
-        Err(_) => return HttpResponse::BadRequest().body("Invalid token"),
+    let authorization = match Authorization::try_from(request.headers()) {
+        Ok(authorization) => authorization,
+        Err(e) => return HttpResponse::BadRequest().body(e),
     };
 
     let mut games = GAMES.write().await;
 
-    let game = match games.get_mut(&uuid) {
+    let game = match games.get_mut(&authorization.into()) {
         Some(game) => game,
         None => return HttpResponse::BadRequest().body("No game found"),
     };
@@ -204,7 +252,7 @@ pub async fn forty_nine_three(request: HttpRequest) -> impl Responder {
     }
 
     if let Some(latest_measure_string) = game.already_seen_measures.pop() {
-        let latest_measure = match crate::measure::MEASURES.get(&latest_measure_string) {
+        let latest_measure = match MEASURES.get(&latest_measure_string) {
             Some(measure) => measure,
             None => return HttpResponse::InternalServerError().body("Measure not found"),
         };

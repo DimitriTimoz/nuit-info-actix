@@ -1,15 +1,19 @@
 {
     "source": "united_nations",
-    "prompt": "Monsieur le Président, nous avons une proposition pour inciter la population a faire attention à son empreinte carbone. Nous proposons de mettre en place une taxe carbone.",
+    "title": "Taxe Carbone",
+    "description": "Monsieur le Président, nous avons une proposition pour inciter la population a faire attention à son empreinte carbone. Nous proposons de mettre en place une taxe carbone.",
     "acceptation_impact": {
         "social": 0,
-        "environmental": 1,
-        "economic": -1,
+        "environmental": 5,
+        "economic": -5,
         "factions": {
             "scientist": 0,
-            "united_nations": 5,
+            "united_nations": 15,
             "cartel": 0
         }
     },
-    "comment": "C'est une solution pour réduire les emission de CO2 cependant cela peut poser des problèmes économiques dans certains secteurs industriels."
+    "comment": "C'est une solution pour réduire les emission de CO2 cependant cela peut poser des problèmes économiques dans certains secteurs industriels.",
+    "links": [
+
+    ]
 }
