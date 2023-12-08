@@ -71,7 +71,7 @@ impl Measure {
     }
 
     fn from_file(file_path: String) -> Result<Measure, Error> {
-        let file = std::fs::read_to_string(file_path).map_err(|_| Error::FailedToReadMeasureFile)?;
+        let file = std::fs::read_to_string(&file_path).map_err(|_| Error::FailedToReadMeasureFile)?;
         let file_parsed: RawMeasure = serde_json::from_str(&file).map_err(|_| Error::FailedToParseMeasureFile)?;
         Ok((file_path, file_parsed).into())
     }
