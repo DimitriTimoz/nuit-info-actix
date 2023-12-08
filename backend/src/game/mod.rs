@@ -5,7 +5,7 @@ use std::collections::{HashMap, HashSet};
 use tokio::sync::RwLock;
 
 lazy_static::lazy_static! {
-    static ref GAMES : RwLock<HashMap<Uuid, Game>> = RwLock::new(HashMap::new());
+    pub static ref GAMES : RwLock<HashMap<Uuid, Game>> = RwLock::new(HashMap::new());
 }
 
 pub struct Game {
@@ -15,20 +15,24 @@ pub struct Game {
     scientist: i32,
     united_nations: i32,
     cartel: i32,
-    already_seen_measures: HashSet<String>,
+    pub current_measure: String,
+    pub already_seen_measures: HashSet<String>,
 }
 
 impl Game {
     fn new() -> Self {
-        Game {
+        let mut game = Game {
             social: 50,
             economic: 50,
             environmental: 50,
             scientist: 50,
             united_nations: 50,
             cartel: 50,
+            current_measure: String::new(),
             already_seen_measures: HashSet::new(),
-        }
+        };
+        crate::measure::replace_measure(&mut game);
+        game
     }
 }
 
