@@ -1,0 +1,15 @@
+{
+    "source": "councellor",
+    "prompt": "Monsieur le Président, nous pouvons débuter la construction d'un nouveau barrage.",
+    "acceptation_impact": {
+        "social": -4,
+        "environmental": 2,
+        "economic": 3,
+        "factions": {
+            "scientist": 1,
+            "united_nations": 0,
+            "cartel": 0
+        }
+    },
+    "comment": null
+}

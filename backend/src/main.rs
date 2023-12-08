@@ -11,6 +11,7 @@ pub mod config;
 pub mod errors;
 pub mod models;
 pub mod cors;
+pub mod measure;
 
 #[get("/")]
 async fn hello() -> impl Responder {
@@ -24,6 +25,8 @@ async fn manual_hello() -> impl Responder {
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
+    println!("{}", measure::MEASURES.len());
+
     dotenv().ok();
 
     let config_ = Config::builder()
@@ -51,6 +54,7 @@ async fn main() -> std::io::Result<()> {
             .wrap(actix_web::middleware::DefaultHeaders::new().add(("Access-Control-Allow-Origin", "*")))
             .service(cors::cors_preflight)
             .service(hello)
+            .service(measure::get_measure)
             .route("/hey", web::get().to(manual_hello))
     })
     .bind(("0.0.0.0", 8000))?

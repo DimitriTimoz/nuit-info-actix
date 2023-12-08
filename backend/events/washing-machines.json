@@ -1,0 +1,15 @@
+{
+    "source": "councellor",
+    "prompt": "Monsieur le Président, l'industrie des machines à laver propose que nous subventionnions les machines à grande capacité.",
+    "acceptation_impact": {
+        "social": 1,
+        "environmental": -2,
+        "economic": -2,
+        "factions": {
+            "scientist": -1,
+            "united_nations": 0,
+            "cartel": 0
+        }
+    },
+    "comment": "Les machines à laver à grande capacité sont souvent utilisées en dessous de leur capacité maximale. Cela signifie que nous consommons plus d'énergie et d'eau sans raison."
+}
