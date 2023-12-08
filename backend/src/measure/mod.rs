@@ -29,17 +29,20 @@ pub struct MeasureImpact {
 #[derive(Serialize, Deserialize, Debug)]
 pub struct RawMeasure {
     source: String,
-    prompt: String,
+    title: String,
+    description: String,
     pub acceptation_impact: MeasureImpact,
     comment: Option<String>,
+    #[serde(default)]
+    links: Vec<String>,
 }
 
 impl From<(String, RawMeasure)> for Measure {
     fn from((id, measure): (String, RawMeasure)) -> Self {
         Measure {
             id,
-            title: measure.source,
-            description: measure.comment.unwrap_or_default(),
+            title: measure.title,
+            description: measure.description.unwrap_or_default(),
             action_type: ActionType::AcceptOrReject,
         }
     }
