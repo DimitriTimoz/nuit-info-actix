@@ -18,7 +18,7 @@ import { useCreateGame } from '@/features/game/service';
 
 export default function PageDashboard() {
   const form = useForm({
-    onSubmit: (e) => {
+    onValidSubmit: (e) => {
       createGame(e.pseudo);
     },
   });
@@ -43,22 +43,23 @@ export default function PageDashboard() {
           </CardHeader>
           <CardBody>
             <Stack flexDir="column" gap={8}>
-              <Button
-                onClick={() => createGame('')}
-                isLoading={isLoading}
-                color="white"
-                colorScheme="teal"
-              >
-                {t('layout:createGame.newGame')}
-              </Button>
-
               <Formiz connect={form} autoForm>
-                <FieldInput
-                  name="pseudo"
-                  label={t('layout:createGame.username')}
-                  placeholder={t('layout:createGame.enterUsername')}
-                  required={t('layout:createGame.requiredUsername')}
-                />
+                <Stack spacing={4}>
+                  <FieldInput
+                    name="pseudo"
+                    label={t('layout:createGame.username')}
+                    placeholder={t('layout:createGame.enterUsername')}
+                    required={t('layout:createGame.requiredUsername')}
+                  />
+                  <Button
+                    type="submit"
+                    isLoading={isLoading}
+                    color="white"
+                    colorScheme="teal"
+                  >
+                    {t('layout:createGame.newGame')}
+                  </Button>
+                </Stack>
               </Formiz>
               <Logo width="600" height="400"></Logo>
             </Stack>

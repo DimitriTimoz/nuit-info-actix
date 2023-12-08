@@ -19,5 +19,5 @@ export const zGame = () =>
     scientist: z.number(),
     social: z.number(),
     united_nations: z.number(),
-    gameOver: z.boolean(),
+    game_over: z.boolean(),
   });

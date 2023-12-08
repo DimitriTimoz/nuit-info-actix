@@ -6,7 +6,6 @@ import {
   Card,
   Heading,
   Modal,
-  ModalBody,
   ModalContent,
   ModalFooter,
   ModalHeader,
@@ -29,7 +28,6 @@ import { useGame, useGetMeasure } from '@/features/dashboard/service';
 import { Loader } from '@/layout/Loader';
 
 export default function PageDashboard() {
-  useTranslation(['dashboard']);
   const navigate = useNavigate();
   const { data: measure, isLoading, refetch } = useGetMeasure();
   const {
@@ -38,11 +36,12 @@ export default function PageDashboard() {
     refetch: refetchGame,
   } = useGame();
 
-  const { isOpen, onClose, onOpen } = useDisclosure();
+  const { onOpen } = useDisclosure();
   const { t } = useTranslation(['layout']);
 
   useEffect(() => {
-    if (game?.gameOver) {
+    if (!game && !localStorage.getItem('token')) return navigate('/');
+    if (game?.game_over) {
       onOpen();
     }
   }, [game]);
@@ -50,7 +49,10 @@ export default function PageDashboard() {
   if (isGameLoading) return <Loader />;
   if (isLoading) return <Loader />;
   if (!measure) return <Text>Aucune mesure non trouvée :(</Text>;
-
+  if (!game) {
+    navigate('/');
+    return <Text>Aucune partie trouvé</Text>;
+  }
   const handleGameOver = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('pseudo');
@@ -61,16 +63,20 @@ export default function PageDashboard() {
   return (
     <Page containerSize="full">
       <PageContent>
+        <Stack>
+          <Text fontWeight="bold">{localStorage.getItem('pseudo')}</Text>
+        </Stack>
         <Stack align="center">
           <Card px="6" py="4">
             <Stack direction="row" align="center">
               <Icon fontSize="2xl" icon={FaRegCalendarAlt} />
               <Text fontSize="2xl" fontWeight="bold">
                 {`${
-                  (game?.current_month ?? '').toString.length < 2
-                    ? `0${game?.current_month}`
-                    : game?.current_month
-                }/${game?.current_year}`}
+                  (!!game.current_month ? game.current_month : 1).toString()
+                    .length < 2
+                    ? `0${game.current_month}`
+                    : game.current_month
+                }/${game.current_year}`}
               </Text>
             </Stack>
           </Card>
@@ -83,7 +89,7 @@ export default function PageDashboard() {
                   {t('layout:dashboard.environement')}
                 </Heading>
                 <Progress
-                  value={game?.environmental}
+                  value={game.environmental}
                   size="md"
                   width="full"
                   rounded="xl"
@@ -92,7 +98,7 @@ export default function PageDashboard() {
               <VStack width="full">
                 <Heading size="md">{t('layout:dashboard.social')}</Heading>
                 <Progress
-                  value={game?.social}
+                  value={game.social}
                   size="md"
                   width="full"
                   rounded="xl"
@@ -102,7 +108,7 @@ export default function PageDashboard() {
               <VStack width="full">
                 <Heading size="md">{t('layout:dashboard.economy')}</Heading>
                 <Progress
-                  value={game?.economic}
+                  value={game.economic}
                   size="md"
                   width="full"
                   rounded="xl"
@@ -130,34 +136,33 @@ export default function PageDashboard() {
                   <Heading size="md">
                     {t('layout:dashboard.scientists')}
                   </Heading>
-                  <Text>{game?.scientist}%</Text>
+                  <Text>{game.scientist}%</Text>
                 </Box>
                 <Box>
                   <Heading size="md">
                     {t('layout:dashboard.united_nation')}
                   </Heading>
-                  <Text>{game?.united_nations}%</Text>
+                  <Text>{game.united_nations}%</Text>
                 </Box>
                 <Box>
                   <Heading size="md">{t('layout:dashboard.cartel')}</Heading>
-                  <Text>{game?.cartel}%</Text>
+                  <Text>{game.cartel}%</Text>
                 </Box>
               </Stack>
             </Stack>
           </VStack>
         </Stack>
-        <Modal isOpen={game?.gameOver ?? false} onClose={() => null}>
+        <Modal isOpen={game.game_over} onClose={() => null}>
           <ModalOverlay />
           <ModalContent>
-            <ModalHeader alignSelf="center">Game Over</ModalHeader>
-
-            <ModalBody></ModalBody>
-
-            <ModalFooter alignItems="center">
-              <Button flex={1} colorScheme="teal" onClick={handleGameOver}>
-                Recommencer une partie
-              </Button>
-            </ModalFooter>
+            <Stack spacing={5}>
+              <ModalHeader alignSelf="center">Game Over</ModalHeader>
+              <ModalFooter alignItems="center">
+                <Button flex={1} colorScheme="teal" onClick={handleGameOver}>
+                  Recommencer une partie
+                </Button>
+              </ModalFooter>
+            </Stack>
           </ModalContent>
         </Modal>
       </PageContent>

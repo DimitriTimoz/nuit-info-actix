@@ -15,8 +15,6 @@ export const MainMenu = ({ ...rest }) => {
       <MainMenuItem to="/dashboard">
         {t('layout:mainMenu.dashboard')}
       </MainMenuItem>
-      <MainMenuItem to="/news">{t('layout:mainMenu.news')}</MainMenuItem>
-      <MainMenuItem to="/social">{t('layout:mainMenu.social')}</MainMenuItem>
     </Stack>
   );
 };

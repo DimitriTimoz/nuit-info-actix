@@ -40,7 +40,7 @@ export const CardMeasure = ({
   });
   return (
     <Card shadow="2xl">
-      <CardBody>
+      <CardBody minH="sm">
         <Stack>
           <Text textAlign="center" fontWeight="bold">
             {measure?.title}
