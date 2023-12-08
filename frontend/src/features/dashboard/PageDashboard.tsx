@@ -6,6 +6,7 @@ import {
   Card,
   Heading,
   Modal,
+  ModalBody,
   ModalContent,
   ModalFooter,
   ModalHeader,
@@ -24,6 +25,7 @@ import { useNavigate } from 'react-router-dom';
 import { CardMeasure } from '@/components/CardMeasure';
 import { Icon } from '@/components/Icons';
 import { Page, PageContent } from '@/components/Page';
+import { useToastInfo } from '@/components/Toast';
 import { useGame, useGetMeasure } from '@/features/dashboard/service';
 import { Loader } from '@/layout/Loader';
 
@@ -36,6 +38,7 @@ export default function PageDashboard() {
     refetch: refetchGame,
   } = useGame();
 
+  const toastInfo = useToastInfo();
   const { onOpen } = useDisclosure();
   const { t } = useTranslation(['layout']);
 
@@ -43,6 +46,12 @@ export default function PageDashboard() {
     if (!game && !localStorage.getItem('token')) return navigate('/');
     if (game?.game_over) {
       onOpen();
+    }
+    if (game?.notification && !game.game_over) {
+      toastInfo({
+        title: 'Notification',
+        description: game?.notification,
+      });
     }
   }, [game]);
 
@@ -53,6 +62,12 @@ export default function PageDashboard() {
     navigate('/');
     return <Text>Aucune partie trouvé</Text>;
   }
+
+  const parseMeasure = (measure: number) => {
+    if (measure < 0) return 0;
+    if (measure > 100) return 100;
+    return measure;
+  };
   const handleGameOver = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('pseudo');
@@ -157,6 +172,14 @@ export default function PageDashboard() {
           <ModalContent>
             <Stack spacing={5}>
               <ModalHeader alignSelf="center">Game Over</ModalHeader>
+              <ModalBody>
+                <Text>Cartel: {parseMeasure(game.cartel)}%</Text>
+                <Text>Scientifique: {parseMeasure(game.scientist)}%</Text>
+                <Text>ONU: {parseMeasure(game.united_nations)}%</Text>
+                <Text>Environnement: {parseMeasure(game.environmental)}%</Text>
+                <Text>Social: {parseMeasure(game.social)}%</Text>
+                <Text>Economique: {parseMeasure(game.economic)}%</Text>
+              </ModalBody>
               <ModalFooter alignItems="center">
                 <Button flex={1} colorScheme="teal" onClick={handleGameOver}>
                   Recommencer une partie
