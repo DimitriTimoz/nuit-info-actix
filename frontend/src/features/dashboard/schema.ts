@@ -20,4 +20,5 @@ export const zGame = () =>
     social: z.number(),
     united_nations: z.number(),
     game_over: z.boolean(),
+    notification: z.string().optional().nullish(),
   });
