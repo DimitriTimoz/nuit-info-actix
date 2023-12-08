@@ -5,15 +5,15 @@
     "social": "التواصل الاجتماعي",
     "news": "الأخبار"
   },
-  "accountMenu": {
-    "version": {
-      "copied": "تم نسخ الإصدار",
-      "copy": "نسخ الإصدار",
-      "label": "إصدار"
-    },
-    "switchColorModeDark": "التحويل إلى وضع الظلام ",
-    "switchColorModeLight": "التحويل إلى وضع الإضاءة ",
-    "myAccount": "حسابي",
-    "logout": "تسجيل خروج"
+  "dashboard":{
+    "environement": "Environement",
+    "social": "Social",
+    "economy": "Economiy",
+    "affinity": "Affinités : ",
+    "scientists": "Scientists",
+    "united_nation": "United Nations",
+    "cartel": "Cartel",
+    "accept": "Accepter",
+    "reject": "Refuser"
   }
 }
