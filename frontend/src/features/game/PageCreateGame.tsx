@@ -10,10 +10,12 @@ import {
 
 import { Logo } from '@/components/Logo';
 import { Page, PageContent } from '@/components/Page';
+import { useCreateGame } from '@/features/game/service';
 
 export default function PageDashboard() {
+  const { mutate: createGame, isLoading } = useCreateGame();
   return (
-    <Page>
+    <Page isFocusMode>
       <PageContent>
         <Card shadow="2xl" flex={1} rounded="2xl" p={6}>
           <CardHeader>
@@ -21,7 +23,12 @@ export default function PageDashboard() {
           </CardHeader>
           <CardBody>
             <Stack flexDir="column" gap={8}>
-              <Button color="white" colorScheme="teal">
+              <Button
+                onClick={() => createGame('')}
+                isLoading={isLoading}
+                color="white"
+                colorScheme="teal"
+              >
                 New Game
               </Button>
               <Button color="white" colorScheme="teal">
