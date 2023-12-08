@@ -60,7 +60,7 @@ async fn main() -> std::io::Result<()> {
             .service(game::get_game)
             .route("/hey", web::get().to(manual_hello))
     })
-    .bind(("0.0.0.0", 8000))?
+    .bind(("127.0.0.1", 8000))?
     .run();
     println!("Server running at http://localhost:8000/");
 
