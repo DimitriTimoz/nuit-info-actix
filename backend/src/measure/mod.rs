@@ -41,7 +41,7 @@ impl From<RawMeasure> for Measure {
     fn from(raw_measure : RawMeasure) -> Self {
         Measure {
             title: raw_measure.title,
-            description: raw_measure.description.unwrap_or_default(),
+            description: raw_measure.description,
             action_type: ActionType::AcceptOrReject,
         }
     }
