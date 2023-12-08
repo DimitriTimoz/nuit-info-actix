@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import Axios from 'axios';
 
-import { zMeasure } from '@/features/dashboard/schema';
+import { zGame, zMeasure } from '@/features/dashboard/schema';
 
 export const useHelloWorld = () =>
   useQuery({
@@ -16,5 +16,15 @@ export const useGetMeasure = () =>
     queryFn: async () => {
       const response = await Axios.get('/measure');
       return zMeasure().parse(response.data);
+    },
+  });
+
+export const useGame = () =>
+  useQuery({
+    queryKey: ['game'],
+    queryFn: async () => {
+      const response = await Axios.get('/game');
+
+      return zGame().parse(response.data);
     },
   });

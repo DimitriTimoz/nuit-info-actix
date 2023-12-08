@@ -6,16 +6,19 @@ import { useTranslation } from 'react-i18next';
 
 import { CardMeasure } from '@/components/CardMeasure';
 import { Page, PageContent } from '@/components/Page';
-import { useGetMeasure } from '@/features/dashboard/service';
+import { useGame, useGetMeasure } from '@/features/dashboard/service';
 import { Loader } from '@/layout/Loader';
 
 export default function PageDashboard() {
   useTranslation(['dashboard']);
   const { data: measure, isLoading } = useGetMeasure();
+  const { data: game, isLoading: isGameLoading } = useGame();
   const { t } = useTranslation(['layout']);
 
+  if (isGameLoading) return <Loader />;
+  if (!game) return <Text>Aucune partie en cours :(</Text>;
   if (isLoading) return <Loader />;
-  if (!measure) return <Text>Mesure non trouvé :(</Text>;
+  if (!measure) return <Text>Aucune mesure non trouvée :(</Text>;
 
   return (
     <Page containerSize="full">
@@ -27,16 +30,31 @@ export default function PageDashboard() {
                 <Heading size="md">
                   {t('layout:dashboard.environement')}
                 </Heading>
-                <Progress value={50} size="md" width="full" rounded="xl" />
+                <Progress
+                  value={game.environmental}
+                  size="md"
+                  width="full"
+                  rounded="xl"
+                />
               </VStack>
               <VStack width="full">
                 <Heading size="md">{t('layout:dashboard.social')}</Heading>
-                <Progress value={50} size="md" width="full" rounded="xl" />
+                <Progress
+                  value={game.social}
+                  size="md"
+                  width="full"
+                  rounded="xl"
+                />
               </VStack>
 
               <VStack width="full">
                 <Heading size="md">{t('layout:dashboard.economy')}</Heading>
-                <Progress value={50} size="md" width="full" rounded="xl" />
+                <Progress
+                  value={game.economic}
+                  size="md"
+                  width="full"
+                  rounded="xl"
+                />
               </VStack>
             </Stack>
           </VStack>
@@ -53,17 +71,17 @@ export default function PageDashboard() {
                   <Heading size="md">
                     {t('layout:dashboard.scientists')}
                   </Heading>
-                  <Text>50%</Text>
+                  <Text>{game.scientist}%</Text>
                 </Box>
                 <Box>
                   <Heading size="md">
                     {t('layout:dashboard.united_nation')}
                   </Heading>
-                  <Text>50%</Text>
+                  <Text>{game.united_nations}%</Text>
                 </Box>
                 <Box>
                   <Heading size="md">{t('layout:dashboard.cartel')}</Heading>
-                  <Text>50%</Text>
+                  <Text>{game.cartel}%</Text>
                 </Box>
               </Stack>
             </Stack>

@@ -112,7 +112,7 @@ pub fn replace_measure(game: &mut Game) {
 
 #[get("/measure")]
 async fn get_measure(request: HttpRequest) -> impl Responder {
-    let header_value = request.headers().get("token");
+    let header_value = request.headers().get("Authorization");
 
     let token_value = match header_value {
         Some(token) => token.to_str(),

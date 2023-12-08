@@ -84,7 +84,7 @@ pub async fn create_game(request: HttpRequest, body : web::Json<Pseudo>) -> impl
 
 #[get("/game")]
 pub async fn get_game(request: HttpRequest) -> impl Responder {
-    let header_value = request.headers().get("authorization");
+    let header_value = request.headers().get("Authorization");
 
     let token_value = match header_value {
         Some(token) => token.to_str(),
@@ -125,7 +125,7 @@ pub async fn get_game(request: HttpRequest) -> impl Responder {
 }
 
 pub async fn answer(request: &HttpRequest, factor: isize) -> impl Responder {
-    let header_value = request.headers().get("authorization");
+    let header_value = request.headers().get("Authorization");
 
     let token_value = match header_value {
         Some(token) => token.to_str(),
@@ -175,8 +175,7 @@ pub async fn reject(request: HttpRequest) -> impl Responder {
 
 #[post("/forty_nine_three")]
 pub async fn forty_nine_three(request: HttpRequest) -> impl Responder {
-    let header_value = request.headers().get("authorization");
-
+    let header_value = request.headers().get("Authorization");
     let token_value = match header_value {
         Some(token) => token.to_str(),
         None => return HttpResponse::BadRequest().body("No token provided"),
