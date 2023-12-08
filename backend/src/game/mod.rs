@@ -48,7 +48,7 @@ impl Game {
         
         let random_measure = match get_random_measure(&game) {
             Ok(measure) => measure,
-            Err(e) => panic!("Measure not found"),
+            Err(_) => panic!("Measure not found"),
         };
 
         game.set_current_measure(random_measure);
@@ -85,6 +85,12 @@ impl Game {
     pub fn is_game_over(&self) -> bool {
         self.social <= 5 || self.economic <= 5 || self.environmental <= 5
     }
+
+    pub fn clear_some_measures(&mut self) {
+        for _ in 0..5 {
+            self.already_seen_measures.remove(0);
+        }
+    }
 }
 
 #[derive(Deserialize)]
@@ -93,7 +99,7 @@ struct Pseudo {
 }
 
 #[post("/create_game")]
-pub async fn create_game(request: HttpRequest, body: web::Json<Pseudo>) -> impl Responder {
+pub async fn create_game(_: HttpRequest, body: web::Json<Pseudo>) -> impl Responder {
     let game = Game::new(body.pseudo.clone());
     let id = Uuid::new_v4();
 
@@ -156,14 +162,22 @@ pub async fn answer(request: &HttpRequest, factor: isize) -> impl Responder {
 
     game.already_seen_measures
         .push(game.current_measure.clone());
-    
-    
+
+
+    let random_measure = get_random_measure(game);
+
+    if random_measure.is_err() {
+        game.clear_some_measures();
+    }
+
     let random_measure = match get_random_measure(game) {
         Ok(measure) => measure,
-        Err(e) => return HttpResponse::InternalServerError().body("Measure not found"),
+        Err(_) => return HttpResponse::InternalServerError().body("Random measure not found"),
     };
 
     game.set_current_measure(random_measure);
+
+
 
     HttpResponse::Ok().body("OK")
 }
