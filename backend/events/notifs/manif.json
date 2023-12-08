@@ -1,0 +1,16 @@
+{
+    "source": "Prefet",
+    "prompt": "Monsieur le Président, une manifestation contre la politique actuelle est en cours. Le social va diminuer rapidement si vous ne faites rien.",
+    "trigger": "social < 35",
+    "acceptation_impact": {
+        "social": 0,
+        "environmental": 1,
+        "economic": -1,
+        "factions": {
+            "scientist": 0,
+            "united_nations": 5,
+            "cartel": 0
+        }
+    },
+    "comment": "C'est une solution pour réduire les emission de CO2 cependant cela peut poser des problèmes économiques dans certains secteurs industriels."
+}

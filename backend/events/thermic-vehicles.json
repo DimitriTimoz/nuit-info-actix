@@ -1,0 +1,16 @@
+{
+    "source": "councellor",
+    "prompt": "Interdiction de vente de véhicules thermiques",
+    "acceptation_impact": {
+        "social": -10,
+        "environmental": 6,
+        "economic": 4,
+        "factions": {
+            "scientist": 2,
+            "united_nations": 2,
+            "cartel": 5
+        }
+    },
+    "comment": "La population est mécontente de ce changement radical torp rapide, et estiment que les infrastructures ne sont pas prêtes pour ce changement. Les cartels sont ravis de cette décision, pensant pouvoir développer leur activité souterraine.",
+    "links": null
+}

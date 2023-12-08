@@ -1,0 +1,15 @@
+{
+    "source": "councellor",
+    "prompt": "Importante taxe sur la vente de viande",
+    "acceptation_impact": {
+        "social": -4,
+        "environmental": 3,
+        "economic": 1,
+        "factions": {
+            "scientist": 1,
+            "united_nations": -2,
+            "cartel": 0
+        }
+    },
+    "comment": "La population est mécontente de ce changement radical torp rapide, et estiment que les infrastructures ne sont pas prêtes pour ce changement. Les cartels sont ravis de cette décision, pensant pouvoir développer leur activité souterraine."
+}

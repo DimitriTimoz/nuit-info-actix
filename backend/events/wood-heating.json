@@ -1,0 +1,18 @@
+{
+    "source": "councellor",
+    "prompt": "Monsieur le Président, il faut interdir le chauffage au bois.",
+    "acceptation_impact": {
+        "social": -1,
+        "environmental": 1,
+        "economic": 0,
+        "factions": {
+            "scientist": 1,
+            "united_nations": 0,
+            "cartel": 0
+        }
+    },
+    "comment": "Le chauffage au bois produit des particules fines très nocives pour le corps humain. Selon les autorités américaines, le chauffage au bois domestique est responsable de 25% des riques de cancer.",
+    "links" : [
+        "https://www.tandfonline.com/doi/full/10.1080/10962247.2022.2050442"
+    ]
+}
