@@ -2,7 +2,6 @@ import {
   Button,
   Card,
   CardBody,
-  CardFooter,
   CardHeader,
   Heading,
   Stack,
@@ -27,8 +26,8 @@ export default function PageDashboard() {
   const navigate = useNavigate();
   const toastError = useToastError();
   const { mutate: createGame, isLoading } = useCreateGame({
-    onSuccess: (game: { token: string }) => {
-      !game.token.length
+    onSuccess: (token: string) => {
+      !token.length
         ? toastError({ title: 'Pas de session créé' })
         : navigate('/dashboard');
     },

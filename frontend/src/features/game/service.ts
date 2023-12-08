@@ -6,16 +6,15 @@ export const useCreateGame = ({ ...config }) =>
   useMutation({
     mutationKey: ['createGame'],
     mutationFn: async (pseudo: string) => {
-      const response = await Axios.post('/games', { pseudo });
+      const response = await Axios.post('/create_game', { pseudo });
 
-      const parsedResponse = z
-        .object({ token: z.string() })
-        .parse(response.data);
-      localStorage.setItem('token', parsedResponse.token);
-      localStorage.setItem('pseudo', pseudo);
-      localStorage.setItem('49.3', 'true');
+      const token = z.string().parse(response.data);
 
-      return parsedResponse;
+      await localStorage.setItem('token', token);
+      await localStorage.setItem('pseudo', pseudo);
+      await localStorage.setItem('49.3', 'true');
+
+      return token;
     },
     ...config,
   });
