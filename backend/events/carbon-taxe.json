@@ -4,11 +4,11 @@
     "description": "Monsieur le Président, nous avons une proposition pour inciter la population a faire attention à son empreinte carbone. Nous proposons de mettre en place une taxe carbone.",
     "acceptation_impact": {
         "social": 0,
-        "environmental": 1,
-        "economic": -1,
+        "environmental": 5,
+        "economic": -5,
         "factions": {
             "scientist": 0,
-            "united_nations": 5,
+            "united_nations": 15,
             "cartel": 0
         }
     },

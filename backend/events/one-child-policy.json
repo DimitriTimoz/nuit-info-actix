@@ -3,12 +3,12 @@
     "title": "Politique de l'enfant unique",
     "description": "Monsieur le Président, la croissance de la population nous force à polluer plus, de plus tout le monde sait que la surpopulation conduit au chomage. Adoptons la politique de l'enfant unique.",
     "acceptation_impact": {
-        "social": -8,
-        "environmental": 3,
-        "economic": -6,
+        "social": -40,
+        "environmental": 15,
+        "economic": -30,
         "factions": {
             "scientist": 0,
-            "united_nations": -3,
+            "united_nations": -15,
             "cartel": 0
         }
     },

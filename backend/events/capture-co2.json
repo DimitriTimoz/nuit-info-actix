@@ -3,13 +3,13 @@
     "title": "Capture de CO2",
     "description": "Monsieur le Président, nous venons directement des États-Unis d'Amérique pour faire une récolte de fond pour lancer notre entreprise. Notre objectif est de capturer le CO2 de l'air.",
     "acceptation_impact": {
-        "social": -2,
+        "social": -10,
         "environmental": 0,
-        "economic": -2,
+        "economic": -10,
         "factions": {
             "scientist": 0,
-            "united_nations": 2,
-            "cartel": 7
+            "united_nations": 10,
+            "cartel": 17
         }
     },
     "comment": "C'était une arnaque. Dommage...",

@@ -3,12 +3,12 @@
     "title": "Taxe sur la viande",
     "description": "Importante taxe sur la vente de viande",
     "acceptation_impact": {
-        "social": -4,
-        "environmental": 3,
-        "economic": 1,
+        "social": -20,
+        "environmental": 15,
+        "economic": 5,
         "factions": {
-            "scientist": 1,
-            "united_nations": -2,
+            "scientist": 5,
+            "united_nations": -10,
             "cartel": 0
         }
     },

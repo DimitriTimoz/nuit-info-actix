@@ -3,11 +3,11 @@
     "title": "Interdiction du chauffage au bois",
     "description": "Certains activistes écologistes demandent l'interdiction du chauffage au bois.",
     "acceptation_impact": {
-        "social": -1,
-        "environmental": 1,
+        "social": -5,
+        "environmental": 5,
         "economic": 0,
         "factions": {
-            "scientist": 1,
+            "scientist": 5,
             "united_nations": 0,
             "cartel": 0
         }

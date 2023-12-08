@@ -3,13 +3,13 @@
     "title": "Arrêt du nucléaire",
     "description": "Monsieur le Président, une large portion de la population demande l'arrêt immédiat de l'utilisation de l'énergie nucléaire.",
     "acceptation_impact": {
-        "social": 3,
-        "environmental": -6,
-        "economic": -4,
+        "social": 15,
+        "environmental": -30,
+        "economic": -20,
         "factions": {
-            "scientist": -5,
-            "united_nations": 3,
-            "cartel": -3
+            "scientist": -25,
+            "united_nations": 15,
+            "cartel": -15
         }
     },
     "comment": null

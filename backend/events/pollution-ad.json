@@ -3,13 +3,13 @@
     "title": "Interdiction de la publicité pour les produits polluants",
     "description": "Cette interdiction serait une manière de favoriser les produits écologiques et de limiter la pollution.",
     "acceptation_impact": {
-        "social": 1,
-        "environmental": 1,
-        "economic": -2,
+        "social": 5,
+        "environmental": 5,
+        "economic": -10,
         "factions": {
             "scientist": 0,
-            "united_nations": -2,
-            "cartel": -2
+            "united_nations": -10,
+            "cartel": -10
         }
     },
     "comment": null

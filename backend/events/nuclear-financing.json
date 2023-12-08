@@ -1,14 +1,14 @@
 {
     "source": "scientist",
     "title": "Subvention du nucléaire",
-    "description": "Monsieur le Président, investir massivement est la clé pour un monde plus vert!",
+    "description": "Monsieur le Président, investir massivement dans le nucléaire est la clé pour un monde plus vert!",
     "acceptation_impact": {
-        "social": 3,
-        "environmental": -2,
-        "economic": -3,
+        "social": 15,
+        "environmental": -10,
+        "economic": -15,
         "factions": {
-            "scientist": 5,
-            "united_nations": -2,
+            "scientist": 20,
+            "united_nations": -10,
             "cartel": 0
         }
     },

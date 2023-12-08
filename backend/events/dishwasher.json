@@ -3,11 +3,11 @@
     "title": "Subventions de lave-vaisselles",
     "description": "Monsieur le Président, l'industrie des machines à laver propose que nous subventionnions les laves vaisselle.",
     "acceptation_impact": {
-        "social": 1,
-        "environmental": 2,
-        "economic": -2,
+        "social": 5,
+        "environmental": 5,
+        "economic": -10,
         "factions": {
-            "scientist": 1,
+            "scientist": 5,
             "united_nations": 0,
             "cartel": 0
         }

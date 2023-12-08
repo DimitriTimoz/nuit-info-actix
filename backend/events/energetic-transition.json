@@ -3,12 +3,12 @@
     "title": "Subvention des énergies propres",
     "description": "Monsieur le Président, nous avons une proposition pour réduire la dépendance du pays aux énergies fossiles et à promouvoir les sources d'énergie renouvelable. Nous proposons un investissement massif dans les énergies propres telles que l'éolien et le solaire.",
     "acceptation_impact": {
-        "social": 1,
-        "environmental": 1,
-        "economic": -1,
+        "social": 5,
+        "environmental": 5,
+        "economic": -5,
         "factions": {
-            "scientist": 1,
-            "united_nations": 1,
+            "scientist": 5,
+            "united_nations": 5,
             "cartel": 0
         }
     },

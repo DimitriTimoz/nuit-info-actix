@@ -3,12 +3,12 @@
     "title": "Sapin de Noël",
     "description": "Monsieur le Président, l'industrie des sapins de Noël souligne l'impact négatif des sapins naturels sur l'environnement. Ils proposent de les interdire au profit des sapins artificiels.",
     "acceptation_impact": {
-        "social": -2,
-        "environmental": -1,
-        "economic": 1,
+        "social": -10,
+        "environmental": -5,
+        "economic": 5,
         "factions": {
-            "scientist": -1,
-            "united_nations": -1,
+            "scientist": -5,
+            "united_nations": -5,
             "cartel": 0
         }
     },

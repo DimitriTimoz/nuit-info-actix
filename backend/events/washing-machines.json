@@ -3,11 +3,11 @@
     "title": "Aide à l'achat de machines à laver à grande capacité",
     "description": "L'industrie des machines à laver prétend que l'utilisation de machines à laver à grande capacité est plus écologique. Encourager à l'achat de machines à laver à grande capacité pourrait aider à réduire la consommation d'énergie et d'eau.",
     "acceptation_impact": {
-        "social": 1,
-        "environmental": -2,
-        "economic": -2,
+        "social": 5,
+        "environmental": -10,
+        "economic": -10,
         "factions": {
-            "scientist": -1,
+            "scientist": -5,
             "united_nations": 0,
             "cartel": 0
         }
