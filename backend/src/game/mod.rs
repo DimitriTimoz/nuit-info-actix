@@ -48,7 +48,7 @@ impl Game {
         
         let random_measure = match get_random_measure(&game) {
             Ok(measure) => measure,
-            Err(e) => panic!("Measure not found"),
+            Err(_) => panic!("Measure not found"),
         };
 
         game.set_current_measure(random_measure);
@@ -99,7 +99,7 @@ struct Pseudo {
 }
 
 #[post("/create_game")]
-pub async fn create_game(request: HttpRequest, body: web::Json<Pseudo>) -> impl Responder {
+pub async fn create_game(_: HttpRequest, body: web::Json<Pseudo>) -> impl Responder {
     let game = Game::new(body.pseudo.clone());
     let id = Uuid::new_v4();
 

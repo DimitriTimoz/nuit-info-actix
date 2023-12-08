@@ -1,5 +1,4 @@
 use uuid::Uuid;
-use crate::prelude::*;
 use actix_web::http::header::HeaderMap;
 
 pub struct Authorization(String);
