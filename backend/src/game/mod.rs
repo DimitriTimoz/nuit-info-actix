@@ -81,6 +81,10 @@ impl Game {
     pub fn contains_measure(&self, measure: &str) -> bool {
         self.already_seen_measures.contains(&measure.to_owned())
     }
+
+    pub fn is_game_over(&self) -> bool {
+        self.social <= 5 || self.economic <= 5 || self.environmental <= 5
+    }
 }
 
 #[derive(Deserialize)]
@@ -122,6 +126,7 @@ pub async fn get_game(request: HttpRequest) -> impl Responder {
             "cartel": game.unwrap().cartel,
             "current_year": game.unwrap().current_year,
             "current_month": game.unwrap().current_month,
+            "game_over": game.unwrap().is_game_over(),
         }
     );
 
