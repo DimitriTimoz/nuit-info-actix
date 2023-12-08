@@ -1,7 +1,7 @@
 use serde_json::json;
 use uuid::Uuid;
 use crate::{prelude::*, measure::replace_measure};
-use std::collections::{HashMap, HashSet};
+use std::collections::{HashMap};
 use tokio::sync::RwLock;
 
 lazy_static::lazy_static! {
@@ -16,7 +16,7 @@ pub struct Game {
     united_nations: isize,
     cartel: isize,
     pub current_measure: String,
-    pub already_seen_measures: HashSet<String>,
+    pub already_seen_measures: Vec<String>,
 }
 
 impl Game {
@@ -29,7 +29,7 @@ impl Game {
             united_nations: 50,
             cartel: 50,
             current_measure: String::new(),
-            already_seen_measures: HashSet::new(),
+            already_seen_measures: Vec::new(),
         };
         crate::measure::replace_measure(&mut game);
         game
@@ -124,7 +124,7 @@ pub async fn answer(request: &HttpRequest, factor: isize) -> impl Responder {
     game.united_nations += measure.acceptation_impact.factions.united_nations * factor;
     game.cartel += measure.acceptation_impact.factions.cartel * factor;
 
-    game.already_seen_measures.insert(game.current_measure.clone());
+    game.already_seen_measures.push(game.current_measure.clone());
     replace_measure(game);
 
     HttpResponse::Ok().body("OK")
