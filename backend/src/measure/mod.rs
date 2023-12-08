@@ -1,8 +1,7 @@
 use std::collections::HashMap;
 
 use serde::{Deserialize, Serialize};
-use crate::{prelude::*, game::Game};
-use rand::Rng;
+use crate::{prelude::*, game::{Game, Authorization}};
 
 const MEASURE_DIRECTORY : &str = "./events";
 
@@ -112,26 +111,14 @@ pub fn replace_measure(game: &mut Game) {
 
 #[get("/measure")]
 async fn get_measure(request: HttpRequest) -> impl Responder {
-    let header_value = request.headers().get("Authorization");
-
-    let token_value = match header_value {
-        Some(token) => token.to_str(),
-        None => return HttpResponse::BadRequest().body("No token provided"),
-    };
-
-    let token_string = match token_value {
-        Ok(token) => token,
-        Err(_) => return HttpResponse::BadRequest().body("Token is not a string"),
-    };
-
-    let uuid = match uuid::Uuid::parse_str(token_string) {
-        Ok(uuid) => uuid,
-        Err(_) => return HttpResponse::BadRequest().body("Invalid token"),
+    let authorization = match Authorization::try_from(request.headers()) {
+        Ok(authorization) => authorization,
+        Err(e) => return HttpResponse::BadRequest().body(e),
     };
 
     let games = crate::game::GAMES.read().await;
 
-    let game = match games.get(&uuid) {
+    let game = match games.get(&authorization.into()) {
         Some(game) => game,
         None => return HttpResponse::BadRequest().body("No game found"),
     };
