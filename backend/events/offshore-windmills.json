@@ -1,6 +1,7 @@
 {
     "source": "councellor",
-    "prompt": "Monsieur le Président, on a lancé la création de parcs éoliens mer, cependant les pêcheurs s'y opposent. Ils argumentent que cela fait fuir le poisson. Voulez-vous maintenir le projet.",
+    "title": "Parcs éoliens mer",
+    "description": "Monsieur le Président, on a lancé la création de parcs éoliens mer, cependant les pêcheurs s'y opposent. Ils argumentent que cela fait fuir le poisson. Voulez-vous maintenir le projet ?",
     "acceptation_impact": {
         "social": 1,
         "environmental": 1,

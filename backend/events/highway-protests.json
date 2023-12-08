@@ -1,6 +1,7 @@
 {
     "source": "councellor",
-    "prompt": "Monsieur le Président, la population locale s'oppose à la construction de notre nouvelle autoroute. Ils demandent à ce que le projet soit abandonné.",
+    "title": "Construction d'autoroute",
+    "description": "Monsieur le Président, la population locale s'oppose à la construction de notre nouvelle autoroute. Ils demandent à ce que le projet soit abandonné.",
     "acceptation_impact": {
         "social": 2,
         "environmental": 1,
@@ -11,5 +12,8 @@
             "cartel": -1
         }
     },
-    "comment": null
+    "comment": null,
+    "links": [
+
+    ]
 }

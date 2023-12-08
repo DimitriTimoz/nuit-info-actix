@@ -1,6 +1,7 @@
 {
     "source": "councellor",
-    "prompt": "Interdiction de vente de véhicules thermiques",
+    "title": "Interdiction de vente de véhicules thermiques",
+    "description": "Le passage à l'électrique est une mesure forte qui aurait un impact considérable non seulement sur l'environnement, mais aussi sur l'économie.",
     "acceptation_impact": {
         "social": -10,
         "environmental": 6,

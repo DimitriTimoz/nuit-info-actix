@@ -1,6 +1,7 @@
 {
     "source": "cartel",
-    "prompt": "Monsieur le Président, si vous tolérez les activités du cartel, nous pouvons vous assurer que vous bénéficierez de grandes retombées économiques.",
+    "title": "Proposition du Cartel",
+    "description": "Monsieur le Président, si vous tolérez les activités du cartel, nous pouvons vous assurer que vous bénéficierez de grandes retombées économiques.",
     "acceptation_impact": {
         "social": -3,
         "environmental": 0,
@@ -11,5 +12,8 @@
             "cartel": 7
         }
     },
-    "comment": null
+    "comment": null,
+    "links": [
+
+    ]
 }

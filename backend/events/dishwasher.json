@@ -1,6 +1,7 @@
 {
     "source": "councellor",
-    "prompt": "Monsieur le Président, l'industrie des machines à laver propose que nous subventionnions les laves vaisselle.",
+    "title": "Subventions de lave-vaisselles",
+    "description": "Monsieur le Président, l'industrie des machines à laver propose que nous subventionnions les laves vaisselle.",
     "acceptation_impact": {
         "social": 1,
         "environmental": 2,
@@ -11,5 +12,8 @@
             "cartel": 0
         }
     },
-    "comment": "Les laves vaisselles sont plus efficaces que le lavage à la main, et donc plus écologiques. Mais les subventions sont un coût pour l'état."
+    "comment": "Les laves vaisselles sont plus efficaces que le lavage à la main, et donc plus écologiques. Mais les subventions sont un coût pour l'état.",
+    "links": [
+
+    ]
 }

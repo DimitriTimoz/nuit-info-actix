@@ -1,6 +1,7 @@
 {
     "source": "scientist",
-    "prompt": "Monsieur le Président, les progrès en physique nous permettent de lancer la conception d'un réacteur à fusion pour produire de l'énergie, mais pour cela il nous faut des fonds.",
+    "title": "Fusion nucléaire",
+    "description": "Monsieur le Président, les progrès en physique nous permettent de lancer la conception d'un réacteur à fusion pour produire de l'énergie, mais pour cela il nous faut des fonds.",
     "acceptation_impact": {
         "social": 1,
         "environmental": 3,
@@ -11,5 +12,8 @@
             "cartel": 0
         }
     },
-    "comment": null
+    "comment": "Pour l'heure, la fusion semble être une solution idéale. Cependant c'est un objectif à long terme qui ne permettra pas de résoudre la crise actuelle.",
+    "links": [
+        
+    ]
 }
