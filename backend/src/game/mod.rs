@@ -49,9 +49,9 @@ impl Game {
         if self.current_month > 12 {
             self.current_month = 1;
             self.current_year += 1;
+            self.forty_nine_three = true;
         }
 
-        self.forty_nine_three = true;
     }
 
     pub fn apply_measure(&mut self, measure: &crate::measure::RawMeasure, factor: isize) {
@@ -61,8 +61,6 @@ impl Game {
         self.scientist += measure.acceptation_impact.factions.scientist * factor;
         self.united_nations += measure.acceptation_impact.factions.united_nations * factor;
         self.cartel += measure.acceptation_impact.factions.cartel * factor;
-    
-        self.next_month();
     }
 
 
@@ -154,6 +152,7 @@ pub async fn answer(request: &HttpRequest, factor: isize) -> impl Responder {
     };
 
     game.apply_measure(measure, factor);
+    game.next_month();
 
     game.already_seen_measures.push(game.current_measure.clone());
     replace_measure(game);
