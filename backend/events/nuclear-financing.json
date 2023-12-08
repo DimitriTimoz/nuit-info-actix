@@ -1,0 +1,17 @@
+{
+    "prompt": "Gigantesque financement du nucléaire",
+    "acceptation_impact": {
+        "social": 3,
+        "environmental": -2,
+        "economic": -3,
+        "factions": {
+            "scientist": 3,
+            "united_nations": -2,
+            "cartel": 0
+        }
+    },
+    "comment": "TODO",
+    "links": [
+        ""
+    ]
+}

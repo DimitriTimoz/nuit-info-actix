@@ -1,0 +1,15 @@
+{
+    "source": "scientist",
+    "prompt": "Monsieur le Président, les progrès en physique nous permettent de lancer la conception d'un réacteur à fusion pour produire de l'énergie, mais pour cela il nous faut des fonds.",
+    "acceptation_impact": {
+        "social": 1,
+        "environmental": 3,
+        "economic": 2,
+        "factions": {
+            "scientist": 7,
+            "united_nations": 2,
+            "cartel": 0
+        }
+    },
+    "comment": null
+}
