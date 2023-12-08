@@ -15,6 +15,7 @@ pub struct Game {
     scientist: isize,
     united_nations: isize,
     cartel: isize,
+    forty_nine_three: bool,
     pub current_measure: String,
     pub already_seen_measures: Vec<String>,
 }
@@ -28,6 +29,7 @@ impl Game {
             scientist: 50,
             united_nations: 50,
             cartel: 50,
+            forty_nine_three: true,
             current_measure: String::new(),
             already_seen_measures: Vec::new(),
         };
@@ -138,4 +140,53 @@ pub async fn accept(request: HttpRequest) -> impl Responder {
 #[post("/reject")]
 pub async fn reject(request: HttpRequest) -> impl Responder {
     answer(&request, -1).await
+}
+
+#[post("/forty_nine_three")]
+pub async fn forty_nine_three(request: HttpRequest) -> impl Responder {
+    let header_value = request.headers().get("token");
+
+    let token_value = match header_value {
+        Some(token) => token.to_str(),
+        None => return HttpResponse::BadRequest().body("No token provided"),
+    };
+
+    let token_string = match token_value {
+        Ok(token) => token,
+        Err(_) => return HttpResponse::BadRequest().body("Token is not a string"),
+    };
+
+    let uuid = match Uuid::parse_str(token_string) {
+        Ok(uuid) => uuid,
+        Err(_) => return HttpResponse::BadRequest().body("Invalid token"),
+    };
+
+    let mut games = GAMES.write().await;
+
+    let game = match games.get_mut(&uuid) {
+        Some(game) => game,
+        None => return HttpResponse::BadRequest().body("No game found"),
+    };
+
+    if !game.forty_nine_three {
+        return HttpResponse::BadRequest().body("Already used 49.3");
+    }
+
+    if let Some(latest_measure_string) = game.already_seen_measures.pop() {
+        let latest_measure = match crate::measure::MEASURES.get(&latest_measure_string) {
+            Some(measure) => measure,
+            None => return HttpResponse::InternalServerError().body("Measure not found"),
+        };
+
+        game.social -= latest_measure.acceptation_impact.social;
+        game.economic -= latest_measure.acceptation_impact.economic;
+        game.environmental -= latest_measure.acceptation_impact.environmental;
+        game.scientist -= latest_measure.acceptation_impact.factions.scientist;
+        game.united_nations -= latest_measure.acceptation_impact.factions.united_nations;
+        game.cartel -= latest_measure.acceptation_impact.factions.cartel;
+
+        game.forty_nine_three = false;
+    }
+
+    HttpResponse::Ok().body("OK")
 }
