@@ -3,12 +3,12 @@
     "title": "Interdiction des sacs plastiques",
     "description": "Nous pouvons agir sur la pollution plastique en interdisant les sacs plastiques à usage unique.",
     "acceptation_impact": {
-        "social": -1,
-        "environmental": 1,
-        "economic": -1,
+        "social": -5,
+        "environmental": 5,
+        "economic": -5,
         "factions": {
-            "scientist": 1,
-            "united_nations": 1,
+            "scientist": 5,
+            "united_nations": 5,
             "cartel": 0
         }
     },

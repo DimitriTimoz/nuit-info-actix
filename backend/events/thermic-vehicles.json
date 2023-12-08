@@ -7,9 +7,9 @@
         "environmental": 6,
         "economic": 4,
         "factions": {
-            "scientist": 2,
-            "united_nations": 2,
-            "cartel": 5
+            "scientist": 5,
+            "united_nations": 5,
+            "cartel": 10
         }
     },
     "comment": "La population est mécontente de ce changement radical torp rapide, et estiment que les infrastructures ne sont pas prêtes pour ce changement. Les cartels sont ravis de cette décision, pensant pouvoir développer leur activité souterraine.",

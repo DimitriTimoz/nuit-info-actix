@@ -3,13 +3,13 @@
     "title": "Construction d'autoroute",
     "description": "Monsieur le Président, la population locale s'oppose à la construction de notre nouvelle autoroute. Ils demandent à ce que le projet soit abandonné.",
     "acceptation_impact": {
-        "social": 2,
-        "environmental": 1,
-        "economic": -3,
+        "social": 10,
+        "environmental": 5,
+        "economic": -15,
         "factions": {
             "scientist": 0,
-            "united_nations": 1,
-            "cartel": -1
+            "united_nations": 5,
+            "cartel": -5
         }
     },
     "comment": null,

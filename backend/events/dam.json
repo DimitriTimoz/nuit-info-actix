@@ -3,11 +3,11 @@
     "title": "Barrage",
     "description": "Monsieur le Président, nous pouvons débuter la construction d'un nouveau barrage.",
     "acceptation_impact": {
-        "social": -4,
-        "environmental": 2,
-        "economic": 3,
+        "social": -20,
+        "environmental": 5,
+        "economic": 15,
         "factions": {
-            "scientist": 1,
+            "scientist": 5,
             "united_nations": 0,
             "cartel": 0
         }

@@ -3,12 +3,12 @@
     "title": "Aires protégées",
     "description": "Nous avons reçu une proposition pour réduire la dégradation de la biodiversité. Nous proposons l'expansion des aires protégées pour préserver la biodiversité.",
     "acceptation_impact": {
-        "social": -1,
-        "environmental": 1,
-        "economic": -1,
+        "social": -5,
+        "environmental": 5,
+        "economic": -5,
         "factions": {
-            "scientist": 1,
-            "united_nations": 1,
+            "scientist": 5,
+            "united_nations": 5,
             "cartel": 0
         }
     },
