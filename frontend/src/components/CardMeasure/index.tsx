@@ -9,6 +9,7 @@ import {
   Stack,
   Text,
 } from '@chakra-ui/react';
+import { useTranslation } from 'react-i18next';
 
 import { Measure } from '@/features/dashboard/schema';
 
@@ -19,6 +20,7 @@ export const CardMeasure = ({
   src: string;
   measure: Measure;
 }) => {
+  const { t } = useTranslation(['layout']);
   return (
     <Card shadow="2xl">
       <CardBody>
@@ -39,11 +41,11 @@ export const CardMeasure = ({
       </CardBody>
       <CardFooter display="flex" justify="center" gap="6">
         <ButtonGroup flex={1} justifyContent="space-evenly">
-          <Button colorScheme="red" size="sm">
-            Refuser
+          <Button colorScheme="orange" size="sm">
+            {t('layout:dashboard.reject')}
           </Button>
-          <Button colorScheme="green" size="sm">
-            Accepter
+          <Button colorScheme="teal" size="sm">
+            {t('layout:dashboard.accept')}
           </Button>
         </ButtonGroup>
       </CardFooter>

@@ -20,39 +20,53 @@ export default function PageDashboard() {
   return (
     <Page containerSize="full">
       <PageContent>
-        <Stack p="16" direction={{ base: 'column', md: 'row' }}>
-          <VStack justifyContent="center" alignItems="center" flex={1}>
-            <VStack width="full" mb="4">
-              <Heading size="md">{t('layout:dashboard.environement')}</Heading>
-              <Progress value={50} size="md" width="full" />
-            </VStack>
+        <Stack p="16" direction={{ base: 'column', lg: 'row' }}>
+          <VStack justifyContent="center" alignItems="center" flex={0.5}>
+            <Stack spacing={6} shadow="xl" bg="white" rounded="xl" p={12}>
+              <VStack width="full">
+                <Heading size="md">
+                  {t('layout:dashboard.environement')}
+                </Heading>
+                <Progress value={50} size="md" width="full" rounded="xl" />
+              </VStack>
+              <VStack width="full">
+                <Heading size="md">{t('layout:dashboard.social')}</Heading>
+                <Progress value={50} size="md" width="full" rounded="xl" />
+              </VStack>
 
-            <VStack width="full" mb="4">
-              <Heading size="md">{t('layout:dashboard.social')}</Heading>
-              <Progress value={50} size="md" width="full" />
-            </VStack>
-
-            <VStack width="full" mb="4">
-              <Heading size="md">{t('layout:dashboard.economy')}</Heading>
-              <Progress value={50} size="md" width="full" />
-            </VStack>
+              <VStack width="full">
+                <Heading size="md">{t('layout:dashboard.economy')}</Heading>
+                <Progress value={50} size="md" width="full" rounded="xl" />
+              </VStack>
+            </Stack>
           </VStack>
-          <Stack flex={1} alignItems="center" justify="center">
+          <Stack flex={1} p={12} alignItems="center" justify="center">
             <CardMeasure measure={measure} src={thumbnail.src} />
           </Stack>
-          <VStack flex={1} justify="center" alignItems="center">
-            <Box>
-              <Heading size="md">{t('layout:dashboard.scientists')}</Heading>
-              <Text>50%</Text>
-            </Box>
-            <Box>
-              <Heading size="md">{t('layout:dashboard.united_nation')}</Heading>
-              <Text>50%</Text>
-            </Box>
-            <Box>
-              <Heading size="md">{t('layout:dashboard.cartel')}</Heading>
-              <Text>50%</Text>
-            </Box>
+          <VStack flex={0.5} alignItems="center" justify="center">
+            <Stack shadow="xl" p={12} bg="white" rounded="xl">
+              <Heading mb="6" size="lg">
+                Affinités
+              </Heading>
+              <Stack>
+                <Box>
+                  <Heading size="md">
+                    {t('layout:dashboard.scientists')}
+                  </Heading>
+                  <Text>50%</Text>
+                </Box>
+                <Box>
+                  <Heading size="md">
+                    {t('layout:dashboard.united_nation')}
+                  </Heading>
+                  <Text>50%</Text>
+                </Box>
+                <Box>
+                  <Heading size="md">{t('layout:dashboard.cartel')}</Heading>
+                  <Text>50%</Text>
+                </Box>
+              </Stack>
+            </Stack>
           </VStack>
         </Stack>
       </PageContent>
