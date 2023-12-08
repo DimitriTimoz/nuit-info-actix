@@ -4,8 +4,8 @@
     "social": "Social",
     "news": "News"
   },
-  "dashboard":{
-    "environement": "Environement",
+  "dashboard": {
+    "environement": "Climate",
     "social": "Social",
     "economy": "Economy",
     "affinity": "Affinités : ",
@@ -15,5 +15,4 @@
     "accept": "Accept",
     "reject": "Reject"
   }
-  }
-
+}

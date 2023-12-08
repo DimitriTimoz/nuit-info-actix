@@ -4,8 +4,8 @@
     "social": "Réseau Social",
     "news": "Journaux"
   },
-  "dashboard":{
-    "environement": "Environement",
+  "dashboard": {
+    "environement": "Climat",
     "social": "Social",
     "economy": "Economie",
     "affinity": "Affinités : ",
@@ -15,5 +15,4 @@
     "accept": "Accepter",
     "reject": "Refuser"
   }
-  }
-
+}
