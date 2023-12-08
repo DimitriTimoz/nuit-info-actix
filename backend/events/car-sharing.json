@@ -1,0 +1,15 @@
+{
+    "source": "councellor",
+    "prompt": "Monsieur le Président, nous pourrions subventionner le covoiturage.",
+    "acceptation_impact": {
+        "social": 1,
+        "environmental": 1,
+        "economic": 0,
+        "factions": {
+            "scientist": 0,
+            "united_nations": 0,
+            "cartel": -2
+        }
+    },
+    "comment": null
+}
