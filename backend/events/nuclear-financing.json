@@ -1,17 +1,19 @@
 {
-    "prompt": "Gigantesque financement du nucléaire",
+    "source": "scientist",
+    "title": "Subvention du nucléaire",
+    "description": "Monsieur le Président, investir massivement est la clé pour un monde plus vert!",
     "acceptation_impact": {
         "social": 3,
         "environmental": -2,
         "economic": -3,
         "factions": {
-            "scientist": 3,
+            "scientist": 5,
             "united_nations": -2,
             "cartel": 0
         }
     },
-    "comment": "TODO",
+    "comment": "Le nucléaire est une énergie très décarbonnée (si on ne prend pas en compte la construction), cependant les déchêts à long terme ne sont pas à négliger",
     "links": [
-        ""
+        
     ]
 }

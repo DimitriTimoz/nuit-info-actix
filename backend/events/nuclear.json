@@ -1,14 +1,16 @@
 {
-    "prompt": "Monsieur le Président, une large portion de la population demande l'arrêt immédiat de l'utilisation de l'énergie nucléaire.",
+    "source": "councellor",
+    "title": "Arrêt du nucléaire",
+    "description": "Monsieur le Président, une large portion de la population demande l'arrêt immédiat de l'utilisation de l'énergie nucléaire.",
     "acceptation_impact": {
         "social": 3,
-        "environmental": -2,
-        "economic": -3
-    },
-    "denial_impact": {
-        "social": -1,
-        "environmental": 0,
-        "economic": 0
+        "environmental": -6,
+        "economic": -4,
+        "factions": {
+            "scientist": -5,
+            "united_nations": 3,
+            "cartel": -3
+        }
     },
     "comment": null
 }

@@ -1,6 +1,7 @@
 {
     "source": "councellor",
-    "prompt": "Monsieur le Président, nous pouvons débuter la construction d'un nouveau barrage.",
+    "title": "Barrage",
+    "description": "Monsieur le Président, nous pouvons débuter la construction d'un nouveau barrage.",
     "acceptation_impact": {
         "social": -4,
         "environmental": 2,
@@ -11,5 +12,8 @@
             "cartel": 0
         }
     },
-    "comment": null
+    "comment": "Ce genre de projet soulève souvent le mécontentement et peut nuir à la biodiversité d'une zone. Cependant c'est aussi une bonne manière de produire de l'énergie avec un coût carbone réduit",
+    "links": [
+
+    ]
 }

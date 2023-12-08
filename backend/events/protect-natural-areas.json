@@ -1,6 +1,7 @@
 {
     "source": "councellor",
-    "prompt": "Monsieur le Président, nous avons une proposition pour réduire la dégradation de la biodiversité. Nous proposons l'expansion des aires protégées pour préserver la biodiversité.",
+    "title": "Aires protégées",
+    "description": "Nous avons reçu une proposition pour réduire la dégradation de la biodiversité. Nous proposons l'expansion des aires protégées pour préserver la biodiversité.",
     "acceptation_impact": {
         "social": -1,
         "environmental": 1,
