@@ -12,25 +12,25 @@ enum ActionType {
 }
 
 #[derive(Serialize, Deserialize, Debug)]
-struct FactionImpact {
-    scientist: isize,
-    united_nations: isize,
-    cartel: isize
+pub struct FactionImpact {
+    pub scientist: isize,
+    pub united_nations: isize,
+    pub cartel: isize
 }
 
 #[derive(Serialize, Deserialize, Debug)]
-struct MeasureImpact {
-    social: isize,
-    environmental: isize,
-    economic: isize,
-    factions: FactionImpact
+pub struct MeasureImpact {
+    pub social: isize,
+    pub environmental: isize,
+    pub economic: isize,
+    pub factions: FactionImpact
 }
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct RawMeasure {
     source: String,
     prompt: String,
-    acceptation_impact: MeasureImpact,
+    pub acceptation_impact: MeasureImpact,
     comment: Option<String>,
 }
 

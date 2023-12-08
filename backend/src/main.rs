@@ -58,6 +58,8 @@ async fn main() -> std::io::Result<()> {
             .service(measure::get_measure)
             .service(game::create_game)
             .service(game::get_game)
+            .service(game::accept)
+            .service(game::reject)
             .route("/hey", web::get().to(manual_hello))
     })
     .bind(("0.0.0.0", 8000))?
