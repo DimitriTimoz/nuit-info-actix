@@ -1,14 +1,6 @@
 import React from 'react';
 
-import {
-  Box,
-  Grid,
-  Heading,
-  Progress,
-  Stack,
-  Text,
-  VStack,
-} from '@chakra-ui/react';
+import { Box, Heading, Progress, Stack, Text, VStack } from '@chakra-ui/react';
 import thumbnail from 'assets/thumbnail.png';
 import { useTranslation } from 'react-i18next';
 
