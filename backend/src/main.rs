@@ -58,9 +58,12 @@ async fn main() -> std::io::Result<()> {
             .service(measure::get_measure)
             .service(game::create_game)
             .service(game::get_game)
+            .service(game::accept)
+            .service(game::reject)
+            .service(game::forty_nine_three)
             .route("/hey", web::get().to(manual_hello))
     })
-    .bind(("0.0.0.0", 8000))?
+    .bind(("127.0.0.1", 8000))?
     .run();
     println!("Server running at http://localhost:8000/");
 
