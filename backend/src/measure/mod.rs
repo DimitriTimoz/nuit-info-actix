@@ -1,4 +1,4 @@
-use std::collections::HashMap;
+use std::{collections::HashMap, os::linux::raw};
 
 use serde::{Deserialize, Serialize};
 use crate::{prelude::*, game::Game};
@@ -11,14 +11,14 @@ enum ActionType {
     AcceptOrReject
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct FactionImpact {
     pub scientist: isize,
     pub united_nations: isize,
     pub cartel: isize
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct MeasureImpact {
     pub social: isize,
     pub environmental: isize,
@@ -26,7 +26,7 @@ pub struct MeasureImpact {
     pub factions: FactionImpact
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct RawMeasure {
     source: String,
     title: String,
@@ -37,12 +37,11 @@ pub struct RawMeasure {
     links: Vec<String>,
 }
 
-impl From<(String, RawMeasure)> for Measure {
-    fn from((id, measure): (String, RawMeasure)) -> Self {
+impl From<RawMeasure> for Measure {
+    fn from(raw_measure : RawMeasure) -> Self {
         Measure {
-            id,
-            title: measure.title,
-            description: measure.description.unwrap_or_default(),
+            title: raw_measure.source,
+            description: raw_measure.comment.unwrap_or_default(),
             action_type: ActionType::AcceptOrReject,
         }
     }
@@ -75,7 +74,6 @@ lazy_static::lazy_static! {
 
 #[derive(Serialize, Deserialize, Debug)]
 struct Measure {
-    id: String,
     title: String,
     description: String,
     action_type: ActionType
@@ -138,10 +136,12 @@ async fn get_measure(request: HttpRequest) -> impl Responder {
         None => return HttpResponse::BadRequest().body("No game found"),
     };
 
-    let measure = match MEASURES.get(&game.current_measure) {
+    let measure_raw = match MEASURES.get(&game.current_measure) {
         Some(measure) => measure,
         None => return HttpResponse::InternalServerError().body("Measure not found"),
     };
+
+    let measure = Measure::from(measure_raw.clone());
 
     HttpResponse::Ok().json(measure)
 }
