@@ -112,6 +112,16 @@ impl Game {
     pub fn set_notification(&mut self, notification: String) {
         self.notification = Some(notification);
     }
+
+    pub fn pop_notification(&mut self) -> Option<String> {
+        if self.notification.is_none() {
+            return None;
+        }
+
+        let notification = self.notification.clone();
+        self.notification = None;
+        Some(notification.unwrap())
+    }
 }
 
 #[derive(Deserialize)]
@@ -136,9 +146,9 @@ pub async fn get_game(request: HttpRequest) -> impl Responder {
         Err(e) => return HttpResponse::BadRequest().body(e),
     };
 
-    let games = GAMES.read().await;
+    let mut games = GAMES.write().await;
 
-    let game = match games.get(&authorization.into()) {
+    let game = match games.get_mut(&authorization.into()) {
         Some(game) => Some(game),
         None => return HttpResponse::BadRequest().body("No game found"),
     };
@@ -159,7 +169,7 @@ pub async fn get_game(request: HttpRequest) -> impl Responder {
             "current_year": game.current_year,
             "current_month": game.current_month,
             "game_over": game.is_game_over(),
-            "notification": game.notification,
+            "notification": game.pop_notification(),
         }
     );
 
