@@ -1,26 +1,43 @@
 import {
-  Box,
   Button,
   ButtonGroup,
   Card,
   CardBody,
   CardFooter,
-  Image,
   Stack,
   Text,
 } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
 
 import { Measure } from '@/features/dashboard/schema';
+import {
+  useAcceptMeasure,
+  useRejectMeasure,
+} from '@/features/dashboard/service';
 
 export const CardMeasure = ({
-  src,
   measure,
+  refetchGame,
+  refetchMeasure,
 }: {
-  src: string;
   measure: Measure;
+  refetchGame: () => void;
+  refetchMeasure: () => void;
 }) => {
   const { t } = useTranslation(['layout']);
+
+  const { mutate: acceptMeasure, isLoading: isAccepting } = useAcceptMeasure({
+    onSuccess: () => {
+      refetchGame();
+      refetchMeasure();
+    },
+  });
+  const { mutate: rejectMeasure, isLoading: isRejecting } = useRejectMeasure({
+    onSuccess: () => {
+      refetchGame();
+      refetchMeasure();
+    },
+  });
   return (
     <Card shadow="2xl">
       <CardBody>
@@ -29,22 +46,24 @@ export const CardMeasure = ({
             {measure?.title}
           </Text>
           <Text textAlign="center">{measure?.description}</Text>
-          <Image
-            aspectRatio={1}
-            alignSelf="center"
-            src={src}
-            alt="thumbnail"
-            maxW="80%"
-            rounded="md"
-          />
         </Stack>
       </CardBody>
       <CardFooter display="flex" justify="center" gap="6">
         <ButtonGroup flex={1} justifyContent="space-evenly">
-          <Button colorScheme="orange" size="sm">
+          <Button
+            onClick={() => rejectMeasure()}
+            isLoading={isAccepting || isRejecting}
+            colorScheme="orange"
+            size="sm"
+          >
             {t('layout:dashboard.reject')}
           </Button>
-          <Button colorScheme="teal" size="sm">
+          <Button
+            onClick={() => acceptMeasure()}
+            isLoading={isAccepting || isRejecting}
+            colorScheme="teal"
+            size="sm"
+          >
             {t('layout:dashboard.accept')}
           </Button>
         </ButtonGroup>
