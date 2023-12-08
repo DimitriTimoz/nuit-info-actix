@@ -65,9 +65,9 @@ export default function PageDashboard() {
               <Logo width="400" height="300"></Logo>
               <Heading fontSize="2xl">Objectif du jeu : </Heading>
               <Text>
-                Vous incarnez un dirigeant qui essaye de maintenir à flot son
-                pays, votre but est d'accepter ou non les mesures qui vous
-                seront proposées.
+                {
+                  "Vous incarnez un dirigeant qui essaye de maintenir à flot son pays, votre but est d'accepter ou non les mesures qui vous seront proposées."
+                }
               </Text>
               <Text>
                 Vos réponses auront un impact positif ou négatif sur votre
@@ -75,9 +75,9 @@ export default function PageDashboard() {
                 population et votre économie.
               </Text>
               <Text>
-                Prenez cependant garde aux factions qui seront plus ou moins
-                satisfaites pas vos actions, si vous n'êtes pas en bon terme
-                avec eux, ils vous infligeront des malus.
+                {
+                  "Prenez cependant garde aux factions qui seront plus ou moins satisfaites pas vos actions, si vous n'êtes pas en bon terme avec eux, ils vous infligeront des malus."
+                }
               </Text>
               <Text fontWeight="bold">
                 Puisse le sort vous être favorable !
