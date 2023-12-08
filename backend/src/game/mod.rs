@@ -1,4 +1,5 @@
 use serde_json::json;
+use serde::Deserialize;
 use uuid::Uuid;
 use crate::{prelude::*, measure::replace_measure};
 use std::collections::HashMap;
@@ -9,6 +10,7 @@ lazy_static::lazy_static! {
 }
 
 pub struct Game {
+    pseudo: String,
     social: isize,
     economic: isize,
     environmental: isize,
@@ -23,8 +25,9 @@ pub struct Game {
 }
 
 impl Game {
-    fn new() -> Self {
+    fn new(pseudo : String) -> Self {
         let mut game = Game {
+            pseudo,
             social: 50,
             economic: 50,
             environmental: 50,
@@ -65,15 +68,19 @@ impl Game {
 
 }
 
+#[derive(Deserialize)]
+struct Pseudo {
+    pseudo: String,
+}
+
 #[post("/create_game")]
-pub async fn create_game() -> impl Responder {
-    let game = Game::new();
+pub async fn create_game(request: HttpRequest, body : web::Json<Pseudo>) -> impl Responder {
+    let game = Game::new(body.pseudo.clone());
     let id = Uuid::new_v4();
 
     GAMES.write().await.insert(id, game);
 
     HttpResponse::Ok().body(id.to_string())
-
 }
 
 #[get("/game")]
@@ -201,7 +208,7 @@ pub async fn forty_nine_three(request: HttpRequest) -> impl Responder {
         };
 
         game.apply_measure(latest_measure, -1);
-        
+
         game.forty_nine_three = false;
     }
 
