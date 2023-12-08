@@ -1,5 +1,5 @@
 {
-    "prompt": "Gigantesque financement de la fusion nucléaire",
+    "prompt": "Gigantesque financement du nucléaire",
     "acceptation_impact": {
         "social": 3,
         "environmental": -2,
@@ -10,5 +10,8 @@
             "cartel": 0
         }
     },
-    "comment": "TODO"
+    "comment": "TODO",
+    "links": [
+        ""
+    ]
 }

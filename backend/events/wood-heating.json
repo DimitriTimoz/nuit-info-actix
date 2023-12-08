@@ -11,5 +11,8 @@
             "cartel": 0
         }
     },
-    "comment": null
+    "comment": "Le chauffage au bois produit des particules fines très nocives pour le corps humain. Selon les autorités américaines, le chauffage au bois domestique est responsable de 25% des riques de cancer.",
+    "links" : [
+        "https://www.tandfonline.com/doi/full/10.1080/10962247.2022.2050442"
+    ]
 }
