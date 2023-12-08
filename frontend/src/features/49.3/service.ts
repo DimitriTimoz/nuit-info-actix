@@ -1,10 +1,20 @@
-import { useQuery } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
+import Axios from 'axios';
 
-export const useBorne = () => {
-  useQuery({
-    queryKey: ['borne'],
-    queryFn: async () => {
-      // send 49.3 to backend
+export const useBorne = ({ ...config }) =>
+  useMutation({
+    mutationKey: ['borne'],
+    mutationFn: async () => {
+      if (localStorage.getItem('49.3') === 'false') {
+        return 400;
+      }
+      const response = await Axios.post('/fifty-nine-three');
+
+      if (response.status === 200) {
+        localStorage.setItem('49.3', 'false');
+      }
+
+      return response.data;
     },
+    ...config,
   });
-};
