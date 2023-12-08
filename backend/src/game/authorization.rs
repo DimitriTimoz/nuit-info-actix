@@ -1,6 +1,7 @@
 use uuid::Uuid;
 use actix_web::http::header::HeaderMap;
 
+#[derive(Debug, Clone)]
 pub struct Authorization(String);
 
 impl From<Uuid> for Authorization {

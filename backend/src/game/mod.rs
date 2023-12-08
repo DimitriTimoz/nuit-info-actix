@@ -148,7 +148,7 @@ pub async fn get_game(request: HttpRequest) -> impl Responder {
 
     let mut games = GAMES.write().await;
 
-    let game = match games.get_mut(&authorization.into()) {
+    let game = match games.get_mut(&authorization.clone().into()) {
         Some(game) => Some(game),
         None => return HttpResponse::BadRequest().body("No game found"),
     };
@@ -172,6 +172,10 @@ pub async fn get_game(request: HttpRequest) -> impl Responder {
             "notification": game.pop_notification(),
         }
     );
+
+    if game.is_game_over() {
+        games.remove_entry(&authorization.into());
+    }
 
     HttpResponse::Ok().body(game_informations.to_string())
 }
