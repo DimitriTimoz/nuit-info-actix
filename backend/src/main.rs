@@ -25,6 +25,8 @@ async fn manual_hello() -> impl Responder {
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
+    println!("{}", measure::MEASURES.len());
+
     dotenv().ok();
 
     let config_ = Config::builder()
