@@ -5,6 +5,7 @@ use crate::{prelude::*, measure::replace_measure};
 use std::collections::HashMap;
 use tokio::sync::RwLock;
 
+
 lazy_static::lazy_static! {
     pub static ref GAMES : RwLock<HashMap<Uuid, Game>> = RwLock::new(HashMap::new());
 }
@@ -115,6 +116,8 @@ pub async fn get_game(request: HttpRequest) -> impl Responder {
             "scientist": game.unwrap().scientist,
             "united_nations": game.unwrap().united_nations,
             "cartel": game.unwrap().cartel,
+            "current_year": game.unwrap().current_year,
+            "current_month": game.unwrap().current_month,
         }
     );
 
