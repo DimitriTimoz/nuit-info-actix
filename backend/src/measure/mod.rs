@@ -40,8 +40,8 @@ pub struct RawMeasure {
 impl From<RawMeasure> for Measure {
     fn from(raw_measure : RawMeasure) -> Self {
         Measure {
-            title: raw_measure.source,
-            description: raw_measure.comment.unwrap_or_default(),
+            title: raw_measure.title,
+            description: raw_measure.description.unwrap_or_default(),
             action_type: ActionType::AcceptOrReject,
         }
     }
