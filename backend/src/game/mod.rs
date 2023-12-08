@@ -1,7 +1,7 @@
 use serde_json::json;
 use uuid::Uuid;
 use crate::{prelude::*, measure::replace_measure};
-use std::collections::{HashMap};
+use std::collections::HashMap;
 use tokio::sync::RwLock;
 
 lazy_static::lazy_static! {
