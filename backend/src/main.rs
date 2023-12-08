@@ -26,7 +26,6 @@ async fn manual_hello() -> impl Responder {
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
-    println!("{}", measure::MEASURES.len());
 
     dotenv().ok();
 
@@ -55,7 +54,7 @@ async fn main() -> std::io::Result<()> {
             .wrap(actix_web::middleware::DefaultHeaders::new().add(("Access-Control-Allow-Origin", "*")))
             .service(cors::cors_preflight)
             .service(hello)
-            .service(measure::get_measure)
+            .service(game::get_measure)
             .service(game::create_game)
             .service(game::get_game)
             .service(game::accept)

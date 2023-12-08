@@ -1,14 +1,14 @@
-use serde_json::json;
+use crate::prelude::*;
 use serde::Deserialize;
-use uuid::Uuid;
-use crate::{prelude::*, measure::replace_measure};
+use serde_json::json;
 use std::collections::HashMap;
 use tokio::sync::RwLock;
+use uuid::Uuid;
 
 mod authorization;
-pub use authorization::Authorization;
-
-
+pub use authorization::*;
+mod measure;
+pub use measure::*;
 
 lazy_static::lazy_static! {
     pub static ref GAMES : RwLock<HashMap<Uuid, Game>> = RwLock::new(HashMap::new());
@@ -30,7 +30,7 @@ pub struct Game {
 }
 
 impl Game {
-    fn new(pseudo : String) -> Self {
+    fn new(pseudo: String) -> Self {
         let mut game = Game {
             pseudo,
             social: 50,
@@ -45,7 +45,14 @@ impl Game {
             current_measure: String::new(),
             already_seen_measures: Vec::new(),
         };
-        crate::measure::replace_measure(&mut game);
+        
+        let random_measure = match get_random_measure(&game) {
+            Ok(measure) => measure,
+            Err(e) => panic!("Measure not found"),
+        };
+
+        game.set_current_measure(random_measure);
+
         game
     }
 
@@ -56,10 +63,9 @@ impl Game {
             self.current_year += 1;
             self.forty_nine_three = true;
         }
-
     }
 
-    pub fn apply_measure(&mut self, measure: &crate::measure::RawMeasure, factor: isize) {
+    pub fn apply_measure(&mut self, measure: &RawMeasure, factor: isize) {
         self.social += measure.acceptation_impact.social * factor;
         self.economic += measure.acceptation_impact.economic * factor;
         self.environmental += measure.acceptation_impact.environmental * factor;
@@ -68,7 +74,13 @@ impl Game {
         self.cartel += measure.acceptation_impact.factions.cartel * factor;
     }
 
+    pub fn set_current_measure(&mut self, measure: String) {
+        self.current_measure = (*measure).to_owned();
+    }
 
+    pub fn contains_measure(&self, measure: &str) -> bool {
+        self.already_seen_measures.contains(&measure.to_owned())
+    }
 }
 
 #[derive(Deserialize)]
@@ -77,7 +89,7 @@ struct Pseudo {
 }
 
 #[post("/create_game")]
-pub async fn create_game(request: HttpRequest, body : web::Json<Pseudo>) -> impl Responder {
+pub async fn create_game(request: HttpRequest, body: web::Json<Pseudo>) -> impl Responder {
     let game = Game::new(body.pseudo.clone());
     let id = Uuid::new_v4();
 
@@ -129,7 +141,7 @@ pub async fn answer(request: &HttpRequest, factor: isize) -> impl Responder {
         None => return HttpResponse::BadRequest().body("No game found"),
     };
 
-    let measure = match crate::measure::MEASURES.get(&game.current_measure) {
+    let measure = match MEASURES.get(&game.current_measure) {
         Some(measure) => measure,
         None => return HttpResponse::InternalServerError().body("Measure not found"),
     };
@@ -137,8 +149,16 @@ pub async fn answer(request: &HttpRequest, factor: isize) -> impl Responder {
     game.apply_measure(measure, factor);
     game.next_month();
 
-    game.already_seen_measures.push(game.current_measure.clone());
-    replace_measure(game);
+    game.already_seen_measures
+        .push(game.current_measure.clone());
+    
+    
+    let random_measure = match get_random_measure(game) {
+        Ok(measure) => measure,
+        Err(e) => return HttpResponse::InternalServerError().body("Measure not found"),
+    };
+
+    game.set_current_measure(random_measure);
 
     HttpResponse::Ok().body("OK")
 }
@@ -172,7 +192,7 @@ pub async fn forty_nine_three(request: HttpRequest) -> impl Responder {
     }
 
     if let Some(latest_measure_string) = game.already_seen_measures.pop() {
-        let latest_measure = match crate::measure::MEASURES.get(&latest_measure_string) {
+        let latest_measure = match MEASURES.get(&latest_measure_string) {
             Some(measure) => measure,
             None => return HttpResponse::InternalServerError().body("Measure not found"),
         };
