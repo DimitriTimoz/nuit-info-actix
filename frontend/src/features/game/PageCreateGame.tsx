@@ -5,6 +5,7 @@ import {
   CardHeader,
   Heading,
   Stack,
+  Text,
 } from '@chakra-ui/react';
 import { Formiz, useForm } from '@formiz/core';
 import { useTranslation } from 'react-i18next';
@@ -35,14 +36,14 @@ export default function PageDashboard() {
   return (
     <Page isFocusMode>
       <PageContent>
-        <Card shadow="2xl" flex={1} rounded="2xl" p={6}>
+        <Card shadow="2xl" flex={1} rounded="2xl" p={4}>
           <CardHeader>
             <Heading textAlign="center">
               {t('layout:createGame.createGame')}
             </Heading>
           </CardHeader>
           <CardBody>
-            <Stack flexDir="column" gap={8}>
+            <Stack flexDir="column" gap={4}>
               <Formiz connect={form} autoForm>
                 <Stack spacing={4}>
                   <FieldInput
@@ -61,7 +62,26 @@ export default function PageDashboard() {
                   </Button>
                 </Stack>
               </Formiz>
-              <Logo width="600" height="400"></Logo>
+              <Logo width="400" height="300"></Logo>
+              <Heading fontSize="2xl">Objectif du jeu : </Heading>
+              <Text>
+                Vous incarnez un dirigeant qui essaye de maintenir à flot son
+                pays, votre but est d'accepter ou non les mesures qui vous
+                seront proposées.
+              </Text>
+              <Text>
+                Vos réponses auront un impact positif ou négatif sur votre
+                implication dans votre lutte pour le climat, sur votre
+                population et votre économie.
+              </Text>
+              <Text>
+                Prenez cependant garde aux factions qui seront plus ou moins
+                satisfaites pas vos actions, si vous n'êtes pas en bon terme
+                avec eux, ils vous infligeront des malus.
+              </Text>
+              <Text fontWeight="bold">
+                Puisse le sort vous être favorable !
+              </Text>
             </Stack>
           </CardBody>
         </Card>
