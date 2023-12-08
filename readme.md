@@ -1,18 +1,5 @@
-# TODO:
-Install npm
+# Description 
 
-docker:
-https://docs.docker.com/engine/install
+This is a simple project for "La nuit de l'info 2023" on the theme "The environment, climate and fake news". We build a small game with StartUI and Rust (actix-backend). 
 
-https://github.com/actix/examples/blob/master/databases/postgres/src/main.rs
-
-Il ne faut pas build le frontend sans avoir supprimé le dossier node_modules 
-
-
-## Install yarn:
-```bash
-curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
-echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
-sudo apt-get update
-sudo apt-get install yarn -y
-```
+In this game, you incarnate a president who must make choices keep the equilibrium between the environment, the economy and the social. The more aware you are of the environment, the more you will be able to make the right choices. Sometimes, depending on your choice, you will have to face to unexpected events that can destabilize your country.
