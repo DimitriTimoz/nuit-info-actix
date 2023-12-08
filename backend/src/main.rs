@@ -11,7 +11,6 @@ pub mod config;
 pub mod errors;
 pub mod models;
 pub mod cors;
-pub mod measure;
 pub mod game;
 
 #[get("/")]

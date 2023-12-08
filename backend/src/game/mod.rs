@@ -1,7 +1,8 @@
 use crate::prelude::*;
+use config::Value;
 use serde::Deserialize;
 use serde_json::json;
-use std::collections::HashMap;
+use std::{collections::HashMap, ptr::null};
 use tokio::sync::RwLock;
 use uuid::Uuid;
 
@@ -9,6 +10,8 @@ mod authorization;
 pub use authorization::*;
 mod measure;
 pub use measure::*;
+mod penalty;
+pub use penalty::*;
 
 lazy_static::lazy_static! {
     pub static ref GAMES : RwLock<HashMap<Uuid, Game>> = RwLock::new(HashMap::new());
@@ -25,6 +28,7 @@ pub struct Game {
     forty_nine_three: bool,
     current_year: usize,
     current_month: u8,
+    notification: Option<String>,
     pub current_measure: String,
     pub already_seen_measures: Vec<String>,
 }
@@ -42,6 +46,7 @@ impl Game {
             forty_nine_three: true,
             current_year: 2023,
             current_month: 1,
+            notification: None,
             current_measure: String::new(),
             already_seen_measures: Vec::new(),
         };
@@ -91,6 +96,22 @@ impl Game {
             self.already_seen_measures.remove(0);
         }
     }
+
+    pub fn get_scientist_penalty_probability(&self) -> isize {
+        100 - self.scientist
+    }
+
+    pub fn get_united_nations_penalty_probability(&self) -> isize {
+        100 - self.united_nations
+    }
+
+    pub fn get_cartel_penalty_probability(&self) -> isize {
+        100 - self.cartel
+    }
+
+    pub fn set_notification(&mut self, notification: String) {
+        self.notification = Some(notification);
+    }
 }
 
 #[derive(Deserialize)]
@@ -122,17 +143,23 @@ pub async fn get_game(request: HttpRequest) -> impl Responder {
         None => return HttpResponse::BadRequest().body("No game found"),
     };
 
+    let game = match game {
+        Some(game) => game,
+        None => return HttpResponse::BadRequest().body("No game found"),
+    };
+
     let game_informations = json!(
         {
-            "social": game.unwrap().social,
-            "economic": game.unwrap().economic,
-            "environmental": game.unwrap().environmental,
-            "scientist": game.unwrap().scientist,
-            "united_nations": game.unwrap().united_nations,
-            "cartel": game.unwrap().cartel,
-            "current_year": game.unwrap().current_year,
-            "current_month": game.unwrap().current_month,
-            "game_over": game.unwrap().is_game_over(),
+            "social": game.social,
+            "economic": game.economic,
+            "environmental": game.environmental,
+            "scientist": game.scientist,
+            "united_nations": game.united_nations,
+            "cartel": game.cartel,
+            "current_year": game.current_year,
+            "current_month": game.current_month,
+            "game_over": game.is_game_over(),
+            "notification": game.notification,
         }
     );
 
