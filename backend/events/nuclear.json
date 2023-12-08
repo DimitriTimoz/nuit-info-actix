@@ -1,7 +1,5 @@
 {
-    "id": "nuclear",
     "prompt": "Monsieur le Président, une large portion de la population demande l'arrêt immédiat de l'utilisation de l'énergie nucléaire.",
-    "comment": "TODO",
     "acceptation_impact": {
         "social": 3,
         "environmental": -2,
@@ -11,5 +9,6 @@
         "social": -1,
         "environmental": 0,
         "economic": 0
-    }
+    },
+    "comment": null
 }
