@@ -6,6 +6,7 @@ use crate::prelude::*;
 use super::*;
 
 
+
 const MEASURE_DIRECTORY : &str = "./events";
 
 #[derive(Serialize, Deserialize, Debug)]
@@ -123,9 +124,9 @@ async fn get_measure(request: HttpRequest) -> impl Responder {
         Err(e) => return HttpResponse::BadRequest().body(e),
     };
 
-    let games = crate::game::GAMES.read().await;
+    let mut games = GAMES.write().await;
 
-    let game = match games.get(&authorization.into()) {
+    let game = match games.get_mut(&authorization.into()) {
         Some(game) => game,
         None => return HttpResponse::BadRequest().body("No game found"),
     };
@@ -136,6 +137,10 @@ async fn get_measure(request: HttpRequest) -> impl Responder {
     };
 
     let measure = Measure::from(measure_raw.clone());
+
+    if let Some(penalty) = get_penalty(game) {
+        game.set_notification(format_penalty(penalty));
+    }
 
     HttpResponse::Ok().json(measure)
 }
