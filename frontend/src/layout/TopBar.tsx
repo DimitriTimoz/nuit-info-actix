@@ -56,7 +56,7 @@ export const TopBar = () => {
           pt="safe-top"
           px="4"
           h={theme.layout.topBar.height}
-          bg="gray.800"
+          bg="teal.700"
           boxShadow="layout"
           _dark={{
             bg: 'gray.900',
