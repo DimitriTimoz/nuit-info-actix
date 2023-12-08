@@ -56,6 +56,7 @@ async fn main() -> std::io::Result<()> {
             .service(cors::cors_preflight)
             .service(hello)
             .service(measure::get_measure)
+            .service(game::create_game)
             .route("/hey", web::get().to(manual_hello))
     })
     .bind(("0.0.0.0", 8000))?
