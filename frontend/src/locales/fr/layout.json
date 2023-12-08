@@ -1,20 +1,19 @@
 {
   "mainMenu": {
     "dashboard": "Tableau de bord",
-    "repositories": "Dépôts",
     "social": "Réseau Social",
-    "admin": "Admin",
     "news": "Journaux"
   },
-  "accountMenu": {
-    "version": {
-      "copied": "Version copiée",
-      "copy": "Copier la version",
-      "label": "Version"
-    },
-    "switchColorModeDark": "Passer en mode sombre",
-    "switchColorModeLight": "Passer en mode clair",
-    "myAccount": "Mon compte",
-    "logout": "Déconnexion"
+  "dashboard":{
+    "environement": "Environement",
+    "social": "Social",
+    "economy": "Economie",
+    "affinity": "Affinités : ",
+    "scientists": "Scientifiques",
+    "united_nation": "Nations Unies",
+    "cartel": "Cartel",
+    "accept": "Accepter",
+    "reject": "Refuser"
   }
-}
+  }
+
