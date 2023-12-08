@@ -2,7 +2,10 @@ import {
   Button,
   Card,
   CardBody,
+<<<<<<< Updated upstream
   CardFooter,
+=======
+>>>>>>> Stashed changes
   CardHeader,
   Heading,
   Stack,
@@ -27,8 +30,13 @@ export default function PageDashboard() {
   const navigate = useNavigate();
   const toastError = useToastError();
   const { mutate: createGame, isLoading } = useCreateGame({
+<<<<<<< Updated upstream
     onSuccess: (game: { token: string }) => {
       !game.token.length
+=======
+    onSuccess: (token: string) => {
+      !token.length
+>>>>>>> Stashed changes
         ? toastError({ title: 'Pas de session créé' })
         : navigate('/dashboard');
     },
