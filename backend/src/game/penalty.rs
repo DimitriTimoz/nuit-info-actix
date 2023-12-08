@@ -43,15 +43,15 @@ pub fn get_penalty(game: &Game) -> Option<Penalty> {
 
 pub fn format_penalty(penalty: Penalty) -> String {
     if penalty.cartel_penalty_probability > 0 {
-        return format!("You have been penalized by the cartel by {} points on social", penalty.cartel_penalty_probability);
+        return format!("Vous avez été pénalisé par le cartel de {} points sur le social", penalty.cartel_penalty_probability);
     }
 
     if penalty.united_nations_penalty_probability > 0 {
-        return format!("You have been penalized by the united nations by {} points on economic", penalty.united_nations_penalty_probability);
+        return format!("Vous avez été pénalisé par les nations unies de {} points sur l'économie", penalty.united_nations_penalty_probability);
     }
 
     if penalty.scientist_penalty_probability > 0 {
-        return format!("You have been penalized by the scientist by {} points on environmental", penalty.scientist_penalty_probability);
+        return format!("Vous avez été pénalisé par les scientifiques de {} points sur l'environnement", penalty.scientist_penalty_probability);
     }
 
     String::new()
