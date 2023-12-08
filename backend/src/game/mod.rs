@@ -16,6 +16,8 @@ pub struct Game {
     united_nations: isize,
     cartel: isize,
     forty_nine_three: bool,
+    current_year: usize,
+    current_month: u8,
     pub current_measure: String,
     pub already_seen_measures: Vec<String>,
 }
@@ -30,12 +32,37 @@ impl Game {
             united_nations: 50,
             cartel: 50,
             forty_nine_three: true,
+            current_year: 2023,
+            current_month: 1,
             current_measure: String::new(),
             already_seen_measures: Vec::new(),
         };
         crate::measure::replace_measure(&mut game);
         game
     }
+
+    fn next_month(&mut self) {
+        self.current_month += 1;
+        if self.current_month > 12 {
+            self.current_month = 1;
+            self.current_year += 1;
+        }
+
+        self.forty_nine_three = true;
+    }
+
+    pub fn apply_measure(&mut self, measure: &crate::measure::RawMeasure, factor: isize) {
+        self.social += measure.acceptation_impact.social * factor;
+        self.economic += measure.acceptation_impact.economic * factor;
+        self.environmental += measure.acceptation_impact.environmental * factor;
+        self.scientist += measure.acceptation_impact.factions.scientist * factor;
+        self.united_nations += measure.acceptation_impact.factions.united_nations * factor;
+        self.cartel += measure.acceptation_impact.factions.cartel * factor;
+    
+        self.next_month();
+    }
+
+
 }
 
 #[post("/create_game")]
@@ -119,12 +146,7 @@ pub async fn answer(request: &HttpRequest, factor: isize) -> impl Responder {
         None => return HttpResponse::InternalServerError().body("Measure not found"),
     };
 
-    game.social += measure.acceptation_impact.social * factor;
-    game.economic += measure.acceptation_impact.economic * factor;
-    game.environmental += measure.acceptation_impact.environmental * factor;
-    game.scientist += measure.acceptation_impact.factions.scientist * factor;
-    game.united_nations += measure.acceptation_impact.factions.united_nations * factor;
-    game.cartel += measure.acceptation_impact.factions.cartel * factor;
+    game.apply_measure(measure, factor);
 
     game.already_seen_measures.push(game.current_measure.clone());
     replace_measure(game);
@@ -178,13 +200,8 @@ pub async fn forty_nine_three(request: HttpRequest) -> impl Responder {
             None => return HttpResponse::InternalServerError().body("Measure not found"),
         };
 
-        game.social -= latest_measure.acceptation_impact.social;
-        game.economic -= latest_measure.acceptation_impact.economic;
-        game.environmental -= latest_measure.acceptation_impact.environmental;
-        game.scientist -= latest_measure.acceptation_impact.factions.scientist;
-        game.united_nations -= latest_measure.acceptation_impact.factions.united_nations;
-        game.cartel -= latest_measure.acceptation_impact.factions.cartel;
-
+        game.apply_measure(latest_measure, -1);
+        
         game.forty_nine_three = false;
     }
 
